@@ -1,0 +1,3 @@
+用write写入第一行
+用write写入第一行
+用writelines写入第三行用writelines写入第四行
