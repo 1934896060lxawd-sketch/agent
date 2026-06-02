@@ -3,8 +3,6 @@ from openai import OpenAI
 from typing import List, Dict, Any
 from dotenv import load_dotenv
 
-
-
 # ============================================================
 #    LLM 客户端 —— 封装与大模型的通信
 # 作用：统一管理 API 调用，支持流式输出，让其他模块不需要
@@ -13,6 +11,7 @@ from dotenv import load_dotenv
 
 # 加载 .env 文件中的环境变量（API密钥、模型名等）
 load_dotenv()
+
 
 class HelloAgentsLLM:
     """
@@ -44,8 +43,8 @@ class HelloAgentsLLM:
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=messages,
-                temperature=temperature,   # 温度设为 0，让输出更稳定、可预测
-                stream=True,               # 开启流式输出
+                temperature=temperature,  # 温度设为 0，让输出更稳定、可预测
+                stream=True,  # 开启流式输出
             )
             print("✅ 大语言模型响应成功:")
             collected_content = []
