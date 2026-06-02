@@ -1,9 +1,11 @@
+import operator
 import openai
 import json
 import os
-import re
+import ast
 from dotenv import load_dotenv
 from tavily import TavilyClient
+import math
 
 load_dotenv()
 
@@ -35,11 +37,11 @@ def build_function_tool(name: str, desc: str, params, required):
 
 # ========== 定义计算器工具 ==========
 calculator_params = {
-    "expression": {"type": "string", "description": "数学表达式，例：(100+123)*234"}
+    "expression": {"type": "string", "description": "数学表达式，例：(100+123)*234、sqrt(25)"}
 }
 calculator = build_function_tool(
     name="calculator",
-    desc="执行数学表达式计算，支持加减乘除、括号、根号、平方",
+    desc="执行数学表达式计算，支持加减乘除、括号、根号sqrt、平方pow",
     params=calculator_params,
     required=["expression"]
 )
@@ -58,31 +60,96 @@ search = build_function_tool(
 # 工具列表
 tools = [calculator, search]
 
-# =========【重点1：修改system提示词，强制规则】=========
+# ===== System prompt =====
 messages = [
     {
         "role": "system",
-        "content": """规则：
-1. 遇到**数学计算题**：直接调用 calculator 计算；
-2. 遇到**常识、科普、实时资讯、知识类问题，不确定答案时，必须优先调用 search 工具查询资料**，拿到搜索结果之后再整理答案；
-3. 禁止不调用search直接编造知识性内容；
-4. 不能跳过工具直接回复。"""
+        "content": (
+            "你是严谨的助手。规则如下：\n"
+            "1. 数学计算题 → 调 calculator，开根号用sqrt()、次方用pow(底数,指数)\n"
+            "2. 知识/实时信息类问题 → 必须先调 search，拿到结果再作答，禁止编造\n"
+            "3. 简单闲聊或已有明确答案的问题可直接回复"
+        ),
     },
-    # {"role": "user", "content": "计算（100+123）*234的结果"},
-    {"role": "user", "content": "现在2026年国内主流新能源汽车售价？"} # 测试搜索用
+    {"role": "user", "content": "2026年国内主流新能源汽车售价？"},
 ]
 
 
-def external_search(q: str) -> str:
-    resp = tavily.search(query=q, search_depth="basic")
-    res_list = resp["results"]
-    content = ""
-    for item in res_list:
-        content += f"标题：{item['title']}\n摘要{item['content']}\n"
-    return content
+# ===== AST 安全计算器【新增支持sqrt、pow函数调用】 =====
+ALLOWED_OPS = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.Pow: operator.pow,
+    ast.USub: operator.neg,
+}
+# 允许的内置数学函数白名单
+ALLOW_FUNC = {
+    "sqrt": math.sqrt,
+    "pow": pow
+}
 
 
-# 最多5轮工具调用
+def safe_calc(expr: str) -> str:
+    expr = expr.strip()
+    try:
+        tree = ast.parse(expr, mode='eval')
+    except SyntaxError:
+        return "表达式语法错误"
+
+    def _eval(node):
+        # 常量数字
+        if isinstance(node, ast.Constant):
+            return node.value
+        # 二元运算 +-*/**
+        elif isinstance(node, ast.BinOp):
+            op_func = ALLOWED_OPS.get(type(node.op))
+            if op_func is None:
+                raise ValueError(f"不支持运算符：{type(node.op).__name__}")
+            return op_func(_eval(node.left), _eval(node.right))
+        # 一元负号 -5
+        elif isinstance(node, ast.UnaryOp):
+            op_func = ALLOWED_OPS.get(type(node.op))
+            if op_func is None:
+                raise ValueError(f"不支持运算符：{type(node.op).__name__}")
+            return op_func(_eval(node.operand))
+        # 函数调用 sqrt(9) / pow(2,3)
+        elif isinstance(node, ast.Call):
+            if not isinstance(node.func, ast.Name):
+                raise ValueError("不支持的函数调用")
+            func_name = node.func.id
+            if func_name not in ALLOW_FUNC:
+                raise ValueError(f"禁止函数:{func_name}")
+            args = [_eval(arg) for arg in node.args]
+            return ALLOW_FUNC[func_name](*args)
+        else:
+            raise ValueError(f"不支持语法：{type(node).__name__}")
+
+    try:
+        res = _eval(tree.body)
+        return str(res)
+    except (ValueError, ZeroDivisionError, TypeError) as e:
+        return f"计算错误：{str(e)}"
+
+
+def external_search(query: str) -> str:
+    try:
+        resp = tavily.search(query=query, search_depth="basic", max_results=3)
+        results = resp.get("results", [])
+        if not results:
+            return f"未搜索到关于‘{query}’的相关内容"
+        parts = []
+        for i, item in enumerate(results):
+            title = item.get("title", "无标题")
+            snippet = item.get("content", "")[:300]
+            parts.append(f"[{i+1}] {title}\n{snippet}")
+        return "\n\n".join(parts)
+    except Exception as e:
+        return f"搜索失败：{e}"
+
+
+# ===== Agent 循环 =====
 for turn in range(5):
     response = client.chat.completions.create(
         model="deepseek-chat", messages=messages, tools=tools
@@ -94,32 +161,27 @@ for turn in range(5):
         print("最终回答：", msg.content)
         break
 
-    messages.append(msg)
+    # Pydantic对象转标准字典存入上下文
+    messages.append(msg.model_dump())
 
-    # =========【重点2：根据工具名分流逻辑】=========
+    # 遍历每个工具调用
     for tc in msg.tool_calls:
         tool_name = tc.function.name
         args = json.loads(tc.function.arguments)
-        expr = args["expression"]
-        tool_result = ""
+        expr_param = args["expression"]  # 统一参数key：全是expression
 
         if tool_name == "calculator":
-            # 计算器逻辑
-            if not re.match(r"^[\d+\-*/()\s.]+$", expr):
-                tool_result = "错误：表达式包含非法字符"
-            else:
-                tool_result = str(eval(expr))
-            print(f"【计算器】{expr} = {tool_result}")
+            tool_result = safe_calc(expr_param)
+            print(f"【计算器】{expr_param} = {tool_result}")
 
         elif tool_name == "search":
-            print(f"【联网搜索】查询：{expr}")
-            # 对接真实搜索接口
-            tool_result = external_search(expr)
+            tool_result = external_search(expr_param)
+            print(f"【搜索】{expr_param}，返回字数：{len(tool_result)}")
 
         else:
             tool_result = "不存在该工具"
 
-        # 工具结果塞回上下文
+        # 工具结果回填上下文
         messages.append({
             "role": "tool",
             "tool_call_id": tc.id,
