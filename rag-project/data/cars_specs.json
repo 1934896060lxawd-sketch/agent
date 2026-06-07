@@ -1,0 +1,796 @@
+[
+  {
+    "id": "car_001",
+    "brand": "比亚迪",
+    "model": "海豹08",
+    "full_name": "比亚迪海豹08 中大型智能运动旗舰轿车",
+    "category": "中大型纯电轿车",
+    "price_range": "25-32万元",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂刀片电池（半固态）",
+      "battery_capacity_kwh": 100,
+      "cltc_range_km": 720,
+      "fast_charge": "兆瓦级闪充，5分钟补能400km",
+      "energy_density_wh_per_kg": 300
+    },
+    "performance": {
+      "motor_power_kw": 380,
+      "torque_nm": 700,
+      "zero_to_hundred_seconds": 3.8,
+      "top_speed_kmh": 240
+    },
+    "dimensions": {
+      "length_mm": 5050,
+      "width_mm": 1960,
+      "height_mm": 1460,
+      "wheelbase_mm": 2980,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "DiPilot 300",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["兆瓦闪充", "激光雷达", "Ocean-S概念车设计", "云辇智能车身控制"],
+    "listing_date": "2026年Q1",
+    "data_source": "懂车帝/汽车之家2026年1月报道"
+  },
+  {
+    "id": "car_002",
+    "brand": "比亚迪",
+    "model": "汉L",
+    "full_name": "比亚迪汉L 中大型旗舰轿车",
+    "category": "中大型轿车",
+    "price_range": "20.98-27.98万元",
+    "powertrain": {
+      "type": "纯电动/插混",
+      "battery_type": "磷酸铁锂刀片电池",
+      "battery_capacity_kwh": 85.4,
+      "cltc_range_km": 715,
+      "fast_charge": "800V高压，30%-80%仅需25分钟",
+      "energy_density_wh_per_kg": 200
+    },
+    "performance": {
+      "motor_power_kw": 380,
+      "torque_nm": 700,
+      "zero_to_hundred_seconds": 3.9,
+      "top_speed_kmh": 240
+    },
+    "dimensions": {
+      "length_mm": 5050,
+      "width_mm": 1960,
+      "height_mm": 1505,
+      "wheelbase_mm": 2970,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "DiPilot 300",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": "OTA升级中"
+    },
+    "key_features": ["刀片电池", "云辇-C智能阻尼车身控制", "DiLink 150智能座舱", "丹拿音响"],
+    "listing_date": "2025年上市",
+    "data_source": "汽车之家/比亚迪官网2025年数据"
+  },
+  {
+    "id": "car_003",
+    "brand": "比亚迪",
+    "model": "唐L",
+    "full_name": "比亚迪唐L 全尺寸旗舰SUV",
+    "category": "大型SUV",
+    "price_range": "约40万元",
+    "powertrain": {
+      "type": "纯电动/插混",
+      "battery_type": "磷酸铁锂刀片电池（半固态）",
+      "battery_capacity_kwh": 110,
+      "cltc_range_km": 680,
+      "fast_charge": "兆瓦闪充，5分钟补能400km",
+      "energy_density_wh_per_kg": 300
+    },
+    "performance": {
+      "motor_power_kw": 480,
+      "torque_nm": 900,
+      "zero_to_hundred_seconds": 3.5,
+      "top_speed_kmh": 240
+    },
+    "dimensions": {
+      "length_mm": 5300,
+      "width_mm": 2020,
+      "height_mm": 1820,
+      "wheelbase_mm": 3100,
+      "seats": 7
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "DiPilot 400",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["6/7座布局", "后轮转向", "云辇系统", "易三方", "兆瓦闪充", "二排零重力座椅"],
+    "listing_date": "2026年",
+    "data_source": "汽车之家/懂车帝2026年曝光信息"
+  },
+  {
+    "id": "car_004",
+    "brand": "比亚迪",
+    "model": "宋Ultra DM-i",
+    "full_name": "比亚迪宋Ultra DM-i B级插混SUV",
+    "category": "中型插混SUV",
+    "price_range": "12.99-16.99万元",
+    "powertrain": {
+      "type": "插电式混合动力",
+      "battery_type": "磷酸铁锂刀片电池",
+      "battery_capacity_kwh": 26.6,
+      "cltc_range_km": 310,
+      "cltc_range_combined_km": 1430,
+      "fast_charge": "支持快充",
+      "energy_density_wh_per_kg": 180
+    },
+    "performance": {
+      "engine": "1.5L自然吸气+电动机",
+      "motor_power_kw": 160,
+      "torque_nm": 325,
+      "zero_to_hundred_seconds": 7.5,
+      "top_speed_kmh": 180
+    },
+    "dimensions": {
+      "length_mm": 4765,
+      "width_mm": 1880,
+      "height_mm": 1680,
+      "wheelbase_mm": 2765,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2",
+      "chip": "DiPilot 100",
+      "lidar": false,
+      "highway_noa": true,
+      "city_noa": false
+    },
+    "key_features": ["310km纯电续航（同级最长纯电续航插混）", "超级智能体'迪迪虾'", "云辇-C", "第五代DM技术"],
+    "listing_date": "2026年",
+    "data_source": "凤凰网/汽车之家2026年1月报道"
+  },
+  {
+    "id": "car_005",
+    "brand": "比亚迪",
+    "model": "海狮08",
+    "full_name": "比亚迪海狮08 中大型豪华家用SUV",
+    "category": "中大型SUV",
+    "price_range": "约25万元",
+    "powertrain": {
+      "type": "纯电动/插混",
+      "battery_type": "磷酸铁锂刀片电池",
+      "battery_capacity_kwh": 95,
+      "cltc_range_km": 650,
+      "cltc_range_combined_km": 1430,
+      "fast_charge": "800V高压，30%-80%需25分钟",
+      "energy_density_wh_per_kg": 200
+    },
+    "performance": {
+      "motor_power_kw": 350,
+      "torque_nm": 650,
+      "zero_to_hundred_seconds": 4.2,
+      "top_speed_kmh": 220
+    },
+    "dimensions": {
+      "length_mm": 5100,
+      "width_mm": 1990,
+      "height_mm": 1760,
+      "wheelbase_mm": 3000,
+      "seats": 7
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "DiPilot 300",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["3排6/7座", "插混综合续航1430km", "激光雷达", "对标小鹏G9"],
+    "listing_date": "2026年Q1",
+    "data_source": "懂车帝/汽车之家2026年1月报道"
+  },
+  {
+    "id": "car_006",
+    "brand": "比亚迪",
+    "model": "秦MAX",
+    "full_name": "比亚迪秦MAX A+级轿车",
+    "category": "紧凑型轿车",
+    "price_range": "13-18万元",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂刀片电池",
+      "battery_capacity_kwh": 72,
+      "cltc_range_km": 610,
+      "fast_charge": "800V高压快充",
+      "energy_density_wh_per_kg": 190
+    },
+    "performance": {
+      "motor_power_kw": 240,
+      "torque_nm": 400,
+      "zero_to_hundred_seconds": 5.5,
+      "top_speed_kmh": 200
+    },
+    "dimensions": {
+      "length_mm": 4866,
+      "width_mm": 1880,
+      "height_mm": 1495,
+      "wheelbase_mm": 2820,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2",
+      "chip": "DiPilot 100",
+      "lidar": false,
+      "highway_noa": true,
+      "city_noa": false
+    },
+    "key_features": ["240kW版零百5秒级", "家用性能钢炮", "介于秦L与汉之间定位"],
+    "listing_date": "2026年（已入工信部目录）",
+    "data_source": "汽车之家/懂车帝2026年报道"
+  },
+  {
+    "id": "car_007",
+    "brand": "比亚迪",
+    "model": "海豚",
+    "full_name": "比亚迪海豚 2026款 纯电小型车",
+    "category": "小型纯电轿车",
+    "price_range": "11.68-13.98万元",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂刀片电池",
+      "battery_capacity_kwh": 60.5,
+      "cltc_range_km": 520,
+      "fast_charge": "30%-80%需30分钟",
+      "energy_density_wh_per_kg": 175
+    },
+    "performance": {
+      "motor_power_kw": 130,
+      "torque_nm": 290,
+      "zero_to_hundred_seconds": 9.5,
+      "top_speed_kmh": 160
+    },
+    "dimensions": {
+      "length_mm": 4150,
+      "width_mm": 1770,
+      "height_mm": 1570,
+      "wheelbase_mm": 2700,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2",
+      "chip": "DiPilot",
+      "lidar": false,
+      "highway_noa": false,
+      "city_noa": false
+    },
+    "key_features": ["刀片电池", "城市通勤利器", "皮实耐用", "月销量长期破万"],
+    "listing_date": "2025年改款上市",
+    "data_source": "懂车帝/比亚迪官网2025年数据"
+  },
+  {
+    "id": "car_008",
+    "brand": "小米",
+    "model": "SU7",
+    "full_name": "小米SU7 2026款 中大型纯电轿车",
+    "category": "中大型纯电轿车",
+    "price_range": "21.99-30.39万元",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂/三元锂（Max版为宁德时代101.7kWh）",
+      "battery_capacity_kwh": 101.7,
+      "cltc_range_km": 902,
+      "fast_charge": "897V平台，15分钟补能670km，10%-80%最快12分钟",
+      "energy_density_wh_per_kg": 240
+    },
+    "performance": {
+      "motor_power_kw": 508,
+      "torque_nm": 838,
+      "zero_to_hundred_seconds": 3.08,
+      "top_speed_kmh": 265
+    },
+    "dimensions": {
+      "length_mm": 4997,
+      "width_mm": 1963,
+      "height_mm": 1455,
+      "wheelbase_mm": 3000,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "Xiaomi HAD端到端（XLA认知大模型），700TOPS算力",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["全系标配激光雷达+4D毫米波雷达", "9个安全气囊", "双腔空气弹簧（Pro/Max）", "零重力座椅", "车载冰箱", "902km超长续航"],
+    "listing_date": "2026年3月19日上市",
+    "data_source": "小米汽车官方发布/凤凰科技/汽车之家2026年3月报道"
+  },
+  {
+    "id": "car_009",
+    "brand": "理想",
+    "model": "L6",
+    "full_name": "理想L6 中大型增程五座SUV",
+    "category": "中大型增程SUV",
+    "price_range": "24.98-27.98万元",
+    "powertrain": {
+      "type": "增程式电动",
+      "battery_type": "三元锂电池",
+      "battery_capacity_kwh": 36.8,
+      "cltc_range_km": 212,
+      "cltc_range_combined_km": 1390,
+      "fast_charge": "支持快充",
+      "fuel_consumption_l_per_100km": 6.9
+    },
+    "performance": {
+      "engine": "1.5T增程器+双电机四驱",
+      "motor_power_kw": 300,
+      "torque_nm": 529,
+      "zero_to_hundred_seconds": 5.4,
+      "top_speed_kmh": 180
+    },
+    "dimensions": {
+      "length_mm": 4925,
+      "width_mm": 1960,
+      "height_mm": 1735,
+      "wheelbase_mm": 2920,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "地平线征程6M 128TOPS（Pro）/ 英伟达Thor-U 700TOPS（Max）",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["增程电动无续航焦虑", "大五座空间", "CDC可调悬挂", "理想同学3D毛绒形象"],
+    "listing_date": "2025年焕新上市",
+    "data_source": "理想汽车官网/汽车之家2025年数据"
+  },
+  {
+    "id": "car_010",
+    "brand": "理想",
+    "model": "L8",
+    "full_name": "理想L8 中大型增程六座SUV",
+    "category": "中大型增程SUV",
+    "price_range": "32.18-37.98万元",
+    "powertrain": {
+      "type": "增程式电动",
+      "battery_type": "三元锂电池",
+      "battery_capacity_kwh": 52.3,
+      "cltc_range_km": 280,
+      "cltc_range_combined_km": 1315,
+      "fast_charge": "支持快充",
+      "fuel_consumption_l_per_100km": 7.8
+    },
+    "performance": {
+      "engine": "1.5T增程器+双电机四驱",
+      "motor_power_kw": 330,
+      "torque_nm": 620,
+      "zero_to_hundred_seconds": 5.3,
+      "top_speed_kmh": 180
+    },
+    "dimensions": {
+      "length_mm": 5080,
+      "width_mm": 1995,
+      "height_mm": 1800,
+      "wheelbase_mm": 3005,
+      "seats": 6
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "英伟达Thor-U 700TOPS（Max版）",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["2+2+2六座布局", "全系空气悬挂", "52.3kWh大电池", "纯电续航超280km（Max版）", "电吸门"],
+    "listing_date": "2025年焕新上市",
+    "data_source": "理想汽车官网/汽车之家2025年数据"
+  },
+  {
+    "id": "car_011",
+    "brand": "问界AITO",
+    "model": "M7",
+    "full_name": "问界M7 2026款 中大型增程SUV",
+    "category": "中大型增程/纯电SUV",
+    "price_range": "27.98-38.98万元",
+    "powertrain": {
+      "type": "增程式电动/纯电动",
+      "battery_type": "三元锂电池",
+      "battery_capacity_kwh": 42,
+      "cltc_range_km": 208,
+      "cltc_range_combined_km": 1625,
+      "fast_charge": "支持快充",
+      "fuel_consumption_l_per_100km": 6.5
+    },
+    "performance": {
+      "engine": "1.5T增程器（160马力）",
+      "motor_power_kw": 300,
+      "torque_nm": 605,
+      "zero_to_hundred_seconds": 5.2,
+      "top_speed_kmh": 200
+    },
+    "dimensions": {
+      "length_mm": 5080,
+      "width_mm": 1999,
+      "height_mm": 1780,
+      "wheelbase_mm": 3030,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "华为乾崑智驾ADS",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["鸿蒙智能座舱", "华为ADS智驾系统", "双腔空气悬架（可选）", "增程综合续航1625km"],
+    "listing_date": "2025年9月上市",
+    "data_source": "AITO官网/懂车帝2025年数据"
+  },
+  {
+    "id": "car_012",
+    "brand": "问界AITO",
+    "model": "M9",
+    "full_name": "问界M9 2026款 全景智慧旗舰SUV",
+    "category": "大型增程/纯电SUV",
+    "price_range": "47.98-65.98万元",
+    "powertrain": {
+      "type": "增程式电动/纯电动",
+      "battery_type": "三元锂电池",
+      "battery_capacity_kwh": 120,
+      "cltc_range_km": 750,
+      "cltc_range_combined_km": 1405,
+      "fast_charge": "3C超充",
+      "energy_density_wh_per_kg": 240
+    },
+    "performance": {
+      "engine": "1.5T增程器",
+      "motor_power_kw": 390,
+      "torque_nm": 850,
+      "zero_to_hundred_seconds": 4.5,
+      "top_speed_kmh": 220
+    },
+    "dimensions": {
+      "length_mm": 5285,
+      "width_mm": 2026,
+      "height_mm": 1845,
+      "wheelbase_mm": 3125,
+      "seats": 6
+    },
+    "smart_driving": {
+      "level": "L2+（准L3）",
+      "chip": "华为乾崑智驾ADS 5，6颗激光雷达矩阵（896线主雷达）",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["6颗激光雷达", "全系后轮转向", "全系双腔空悬", "鸿蒙座舱5.2", "零重力座椅", "AR-HUD 75英寸"],
+    "listing_date": "2026年5月27日",
+    "data_source": "AITO官网/搜狐汽车2026年5月报道"
+  },
+  {
+    "id": "car_013",
+    "brand": "蔚来",
+    "model": "ES6",
+    "full_name": "蔚来ES6 2025款 中型智能电动SUV",
+    "category": "中型纯电SUV",
+    "price_range": "33.80万元起（整车）/ 23万元起（BaaS租电）",
+    "powertrain": {
+      "type": "纯电动（换电）",
+      "battery_type": "三元锂电池/150kWh半固态可选",
+      "battery_capacity_kwh": 100,
+      "cltc_range_km": 650,
+      "fast_charge": "换电3-5分钟，四代换电站182秒",
+      "energy_density_wh_per_kg": 360
+    },
+    "performance": {
+      "motor_power_kw": 360,
+      "torque_nm": 700,
+      "zero_to_hundred_seconds": 4.5,
+      "top_speed_kmh": 200
+    },
+    "dimensions": {
+      "length_mm": 4854,
+      "width_mm": 1995,
+      "height_mm": 1703,
+      "wheelbase_mm": 2915,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "高通骁龙8295 + Aquila超感系统（33个传感器+激光雷达）",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["换电3分钟", "全系双电机四驱", "女王副驾", "NOMI语音助手", "BaaS电池租赁方案", "牛屋服务"],
+    "listing_date": "2025年8月全系标配100kWh电池",
+    "data_source": "蔚来官网/界面新闻2025年8月报道"
+  },
+  {
+    "id": "car_014",
+    "brand": "蔚来",
+    "model": "ET7",
+    "full_name": "蔚来ET7 2025款 行政旗舰纯电轿车",
+    "category": "中大型纯电轿车",
+    "price_range": "42.80万元起（整车）/ 32万元起（BaaS租电）",
+    "powertrain": {
+      "type": "纯电动（换电）",
+      "battery_type": "三元锂电池/150kWh半固态可选",
+      "battery_capacity_kwh": 100,
+      "cltc_range_km": 705,
+      "fast_charge": "换电3-5分钟",
+      "energy_density_wh_per_kg": 360
+    },
+    "performance": {
+      "motor_power_kw": 480,
+      "torque_nm": 850,
+      "zero_to_hundred_seconds": 3.8,
+      "top_speed_kmh": 200
+    },
+    "dimensions": {
+      "length_mm": 5101,
+      "width_mm": 1987,
+      "height_mm": 1505,
+      "wheelbase_mm": 3060,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "Aquila超感系统+激光雷达",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["碳化硅电机", "空气悬架", "飞航头等舱后排座椅", "激光投影氛围灯", "150kWh续航超1000km"],
+    "listing_date": "2025年8月全系标配100kWh电池",
+    "data_source": "蔚来官网/百度有驾2025年报道"
+  },
+  {
+    "id": "car_015",
+    "brand": "小鹏",
+    "model": "G6",
+    "full_name": "小鹏G6 2025款 中型纯电SUV",
+    "category": "中型纯电SUV",
+    "price_range": "17.68-19.88万元",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂/三元锂",
+      "battery_capacity_kwh": 87.5,
+      "cltc_range_km": 725,
+      "fast_charge": "800V SiC高压平台，充电快",
+      "energy_density_wh_per_kg": 195
+    },
+    "performance": {
+      "motor_power_kw": 218,
+      "torque_nm": 450,
+      "zero_to_hundred_seconds": 6.2,
+      "top_speed_kmh": 202
+    },
+    "dimensions": {
+      "length_mm": 4758,
+      "width_mm": 1920,
+      "height_mm": 1650,
+      "wheelbase_mm": 2890,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "XNGP全场景智能辅助驾驶",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["800V高压SiC碳化硅平台", "全系标配XNGP", "725km超长续航", "中型SUV高性价比"],
+    "listing_date": "2025年3月改款",
+    "data_source": "小鹏汽车官网/懂车帝2025年数据"
+  },
+  {
+    "id": "car_016",
+    "brand": "小鹏",
+    "model": "MONA M03",
+    "full_name": "小鹏MONA M03 2025款 紧凑型纯电轿车",
+    "category": "紧凑型纯电轿车",
+    "price_range": "11.98-13.98万元",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂",
+      "battery_capacity_kwh": 62.3,
+      "cltc_range_km": 620,
+      "fast_charge": "支持快充",
+      "energy_density_wh_per_kg": 170
+    },
+    "performance": {
+      "motor_power_kw": 160,
+      "torque_nm": 250,
+      "zero_to_hundred_seconds": 7.4,
+      "top_speed_kmh": 170
+    },
+    "dimensions": {
+      "length_mm": 4780,
+      "width_mm": 1896,
+      "height_mm": 1445,
+      "wheelbase_mm": 2760,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2",
+      "chip": "XNGP（Max版搭载满血版）",
+      "lidar": false,
+      "highway_noa": true,
+      "city_noa": "Max版支持城市领航"
+    },
+    "key_features": ["全球AI智驾普及者", "13万级唯一城市领航智驾", "620km续航", "极致性价比"],
+    "listing_date": "2025年5月",
+    "data_source": "小鹏汽车官网/懂车帝2025年数据"
+  },
+  {
+    "id": "car_017",
+    "brand": "极氪",
+    "model": "007",
+    "full_name": "极氪007 2025款 中型纯电轿车",
+    "category": "中型纯电轿车",
+    "price_range": "20.99-29.99万元",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "三元锂电池",
+      "battery_capacity_kwh": 100,
+      "cltc_range_km": 870,
+      "fast_charge": "800V高压，充电15分钟续航500km",
+      "energy_density_wh_per_kg": 220
+    },
+    "performance": {
+      "motor_power_kw": 475,
+      "torque_nm": 710,
+      "zero_to_hundred_seconds": 2.84,
+      "top_speed_kmh": 240
+    },
+    "dimensions": {
+      "length_mm": 4865,
+      "width_mm": 1900,
+      "height_mm": 1450,
+      "wheelbase_mm": 2928,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "双英伟达Orin-X芯片",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["870km超长续航", "双Orin-X智驾", "2.84秒破百", "800V高压平台"],
+    "listing_date": "2025款已上市",
+    "data_source": "极氪官网/汽车之家2025年数据"
+  },
+  {
+    "id": "car_018",
+    "brand": "极氪",
+    "model": "7X",
+    "full_name": "极氪7X 中型纯电家用SUV",
+    "category": "中型纯电SUV",
+    "price_range": "22.99-26.99万元",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "三元锂电池",
+      "battery_capacity_kwh": 100,
+      "cltc_range_km": 780,
+      "fast_charge": "900V高压，充电15分钟续航500km",
+      "energy_density_wh_per_kg": 220
+    },
+    "performance": {
+      "motor_power_kw": 350,
+      "torque_nm": 650,
+      "zero_to_hundred_seconds": 3.8,
+      "top_speed_kmh": 210
+    },
+    "dimensions": {
+      "length_mm": 4825,
+      "width_mm": 1930,
+      "height_mm": 1656,
+      "wheelbase_mm": 2925,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "Thor-U芯片700TOPS（高配）",
+      "lidar": true,
+      "highway_noa": true,
+      "city_noa": true
+    },
+    "key_features": ["900V高压平台", "780km续航", "家用大空间", "2000MPa穹甲安全车身"],
+    "listing_date": "2025款已上市",
+    "data_source": "极氪官网/汽车之家2025年数据"
+  },
+  {
+    "id": "car_019",
+    "brand": "零跑",
+    "model": "C10",
+    "full_name": "零跑C10 2026款 中型纯电/增程SUV",
+    "category": "中型纯电/增程SUV",
+    "price_range": "12.28-14.28万元",
+    "powertrain": {
+      "type": "纯电动/增程式",
+      "battery_type": "磷酸铁锂",
+      "battery_capacity_kwh": 81.9,
+      "cltc_range_km": 660,
+      "cltc_range_combined_km": 1190,
+      "fast_charge": "800V高压，30%-80%需16分钟",
+      "energy_density_wh_per_kg": 185
+    },
+    "performance": {
+      "motor_power_kw": 230,
+      "torque_nm": 360,
+      "zero_to_hundred_seconds": 5.9,
+      "top_speed_kmh": 180
+    },
+    "dimensions": {
+      "length_mm": 4739,
+      "width_mm": 1900,
+      "height_mm": 1680,
+      "wheelbase_mm": 2825,
+      "seats": 5
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "高通骁龙8295",
+      "lidar": false,
+      "highway_noa": true,
+      "city_noa": false
+    },
+    "key_features": ["同级最高续航660km", "二排小桌板", "云栖金配色", "超70项焕新升级"],
+    "listing_date": "2026年6月焕新上市",
+    "data_source": "零跑汽车官网/汽车之家2026年6月报道"
+  },
+  {
+    "id": "car_020",
+    "brand": "零跑",
+    "model": "C16",
+    "full_name": "零跑C16 2026款 中大型增程六座SUV",
+    "category": "中大型增程/纯电SUV",
+    "price_range": "15.18-18.98万元",
+    "powertrain": {
+      "type": "增程式电动/纯电动",
+      "battery_type": "磷酸铁锂",
+      "battery_capacity_kwh": 81.9,
+      "cltc_range_km": 630,
+      "cltc_range_combined_km": 1100,
+      "fast_charge": "800V全域高压，30%-80%需16分钟",
+      "energy_density_wh_per_kg": 185
+    },
+    "performance": {
+      "engine": "1.5L增程器（95马力）",
+      "motor_power_kw": 230,
+      "torque_nm": 360,
+      "zero_to_hundred_seconds": 6.37,
+      "top_speed_kmh": 180
+    },
+    "dimensions": {
+      "length_mm": 4915,
+      "width_mm": 1905,
+      "height_mm": 1770,
+      "wheelbase_mm": 2880,
+      "seats": 6
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "高通骁龙8295",
+      "lidar": false,
+      "highway_noa": true,
+      "city_noa": false
+    },
+    "key_features": ["5/6座可选", "Nappa真皮座椅", "车载冰箱", "21扬声器杜比全景声", "后排吸顶屏"],
+    "listing_date": "2026年6月焕新上市",
+    "data_source": "零跑汽车官网/第一电动2026年6月报道"
+  }
+]
