@@ -1,0 +1,12 @@
+# 环境变量
+.env
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+# 本地下载的大模型权重（核心！）
+rag-project/models/
+Paradigm-and-Framework/models/
+# 换行无关，顺带加
+*.log
+*.tmp
