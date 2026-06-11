@@ -6,10 +6,9 @@ import jieba
 from openai import OpenAI
 from dotenv import load_dotenv
 
-# ============================================================
-# 模块级初始化：只做一次
-# ============================================================
+
 load_dotenv()
+
 
 _llm_client = OpenAI(
     api_key=os.getenv("LLM_API_KEY"),
