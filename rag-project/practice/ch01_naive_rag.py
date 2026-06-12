@@ -64,7 +64,6 @@ def car_to_text(car: dict) -> str:
     # TODO: 实现
     p = car.get("powertrain", {})
     perf = car.get("performance", {})
-    dims = car.get("dimensions", {})
     sd = car.get("smart_driving", {})
 
     features = "、".join(car.get("key_features", []))
@@ -163,8 +162,8 @@ def load_data(data_dir: str) -> list[dict]:
     documents = []
 
     # TODO: ① 加载 cars_specs.json，逐条用 car_to_text() 转换
-    with open(data_dir, "r", encoding="utf-8") as f:
-        cars = f.read()
+    with open(os.path.join(data_dir, "cars_specs.json"), "r", encoding="utf-8") as f:
+        cars = json.load(f)
     for car in cars:
         documents.append({
             "content": car_to_text(car),

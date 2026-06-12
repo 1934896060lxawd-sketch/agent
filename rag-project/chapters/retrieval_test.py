@@ -65,7 +65,6 @@ class VectorIndex:
         # ② 建索引：d=768 是向量维度，IP 是内积度量
         dim = self.embeddings.shape[1]  # 768
         self.index = faiss.IndexFlatIP(dim)
-        #     ↑ 等价写法 faiss.IndexFlat(dim, faiss.METRIC_INNER_PRODUCT)
 
         # ③ 灌入：这一步只跑一次，O(N*dim)
         self.index.add(self.embeddings)
