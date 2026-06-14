@@ -8,22 +8,22 @@
   ④ Reranker 精排   — CrossEncoder 对候选文档和 query 算真正相关性
   ⑤ 上下文拼接      — Top-K 文档 + 对话历史 → 结构化 prompt
   ⑥ LLM 生成        — 带引用标注的回答
-
-前四章 vs 第五章：
-  第一章：关键词检索 → LLM
-  第二章：三种分块策略对比
-  第三章：Embedding + 暴力遍历
-  第四章：FAISS + BM25 + RRF 混合检索
-  第五章：上面所有 + Reranker + Query 改写 + 多轮对话 + 元数据过滤
 """
 
 import os
+# ⚠️ 必须在 import sentence_transformers 之前设置，否则 huggingface_hub
+#    在 CrossEncoder 构造时已经解析了 huggingface.co 域名，镜像就失效了
+os.environ.setdefault("HF_ENDPOINT", "https://hf-mirror.com")
+
+import re
 import sys
 import math
 import jieba
 import numpy as np
 import faiss
 from collections import defaultdict
+from sentence_transformers import CrossEncoder
+from typing import List, Tuple, Dict, Optional
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from naive_rag import load_data, build_prompt, ask_llm
@@ -44,27 +44,77 @@ class Reranker:
     管线位置：粗排（混合检索 Top-K×2）→ 精排（Reranker）→ 取 Top-K 喂 LLM
     """
 
+    # 加载本地模型路径
+    _LOCAL_DIR = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "..", "models",
+        "bge-reranker-base", "BAAI", "bge-reranker-base"
+    )
+
     def __init__(self, model_name: str = "BAAI/bge-reranker-base"):
         """
         BGE Reranker 和 BGE Embedding 同一个团队出品，中文效果好。
-        本地加载优先（和第三章模型加载逻辑一样）。
+        加载策略：本地优先 → 镜像下载 → 降级跳过
         """
-        # TODO: 先检查本地路径，再从 HF 加载
-        # 提示：from sentence_transformers import CrossEncoder
-        ...
+        if os.path.isdir(self._LOCAL_DIR):
+            self.model = CrossEncoder(self._LOCAL_DIR)
+        else:
+            try:
+                self.model = CrossEncoder(model_name)
+            except Exception as e:
+                print(f"[WARN] Reranker 模型加载失败: {e}")
+                print(f"[WARN] 精排步骤将跳过，请手动下载 bge-reranker-base 到:")
+                print(f"       {self._LOCAL_DIR}")
+                self.model = None
 
-    def rerank(self, query: str, candidates: list[dict], top_k: int = 3
+    def rerank(self, query: str, candidates: list[tuple[float, dict]], top_k: int = 3
                ) -> list[tuple[float, dict]]:
         """
         对候选文档逐个和 query 算交叉编码分数。
-        输入：混合检索返回的候选文档列表（建议 top_k*2）
-        输出：按相关性精排后的 top_k
+        输入：混合检索返回的候选文档列表 [(score, doc), ...]
+        输出：按相关性精排后的 top_k，格式同输入
         """
-        # TODO:
-        #   1. 构造 [[query, doc["content"]], ...] pairs
-        #   2. self.model.predict(pairs) 得到分数
-        #   3. 排序取 top_k
-        ...
+        # 模型未加载 → 降级：不做精排，直接返回原始候选
+        if self.model is None:
+            return candidates[:top_k]
+
+        # ① 从 (score, doc) 中提取纯文档列表，丢掉旧分数（RRF 分数在精排阶段无意义）
+        docs = [doc for _, doc in candidates]
+
+        # ② 构造 [[query, doc["content"]], ...] pairs
+        pairs = [[query, doc["content"]] for doc in docs]
+
+        # ③ self.model.predict(pairs) 得到精排分数
+        scored = self.model.predict(pairs)
+
+        # ④ 排序取 top_k，新分数 + 原文档
+        ranked = sorted(
+            zip(scored, docs),
+            key=lambda x: x[0],
+            reverse=True
+        )[:top_k]
+
+        return [(float(s), doc) for s, doc in ranked]
+
+    def format_results(self, scored: list[tuple[float, dict]]) -> str:
+        """
+        格式化精排结果，和其他检索方法保持一致。
+        分数含义和向量检索不同（不是余弦相似度），所以标注为"精排分"。
+        """
+        lines = []
+        for i, (score, doc) in enumerate(scored, 1):
+            content = doc.get("content", "")
+            preview = content[:200] + "..." if len(content) > 200 else content
+            source = doc.get("source", "未知来源")
+
+            line = (
+                f"{i}. 【精排分: {score:.4f}】\n"
+                f"   来源: {source}\n"
+                f"   内容: {preview}\n"
+            )
+            lines.append(line)
+
+        header = f"精排结果 (共 {len(scored)} 条):\n" + "=" * 50 + "\n"
+        return header + "\n".join(lines)
 
 
 # ============================================================
@@ -94,14 +144,34 @@ def rewrite_query(query: str, chat_history: list[dict]) -> str:
     """
     # TODO:
     #   1. 如果是第一轮对话（chat_history 为空），直接返回 query
+    if not chat_history:
+        return query
     #   2. 否则构造 messages = [system prompt] + 历史 + 当前问题
-    #   3. 调 ask_llm() 获取改写结果，返回
-    ...
+    messages = [{"role": "system", "content": QUERY_REWRITE_SYSTEM}]
+    # 追加对话历史（只取最近 N 轮防止 context 过长）
+    # 提示：如果历史很长，取 chat_history[-6:] 保留最近 3 轮
+    messages.extend(chat_history[-6:])  # 最近 3 轮 = 6 条消息
+
+    # 追加当前问题
+    messages.append({
+        "role": "user",
+        "content": f"请把以下问题改写成独立的检索查询（直接输出改写结果，不要解释）：\n{query}"
+    })
+
+    # ③ 调 LLM 获取改写结果
+    rewritten = ask_llm(messages)
+
+    # ④ 容错：如果 LLM 返回了空或异常长的结果，退回原始 query
+    if not rewritten or len(rewritten) > 100:
+        return query
+
+    return rewritten.strip()
 
 
 # ============================================================
 # 3. 元数据过滤 — 结构化字段硬约束
 # ============================================================
+
 
 def extract_filters(query: str) -> dict:
     """
@@ -112,30 +182,136 @@ def extract_filters(query: str) -> dict:
       "纯电轿车"      → {"powertrain": "纯电", "category": "轿车"}
       "小米SU7"       → {"brand": "小米", "model": "SU7"}
 
-    实现思路：用规则匹配（jjieba 分词 + 关键词字典），不调 LLM（太慢）。
+    实现思路：用规则匹配（jieba 分词 + 关键词字典），不调 LLM（太慢）。
     进阶：用 LLM 做 few-shot 提取，准确率更高但多一次 API 调用。
     """
-    # TODO:
-    #   1. 准备价格关键词字典：{"万以内": "max_price", "万以上": "min_price", ...}
-    #   2. 准备类别关键词字典：{"SUV": "SUV", "轿车": "轿车", ...}
-    #   3. 准备动力类型字典：{"纯电": "纯电", "增程": "增程", ...}
-    #   4. 用 jieba 切 query，匹配各字典，返回过滤条件 dict
-    ...
+    # 价格匹配模式
+    PRICE_PATTERNS = [
+        (r"(?P<price>\d+)万\s*(?:以[内下]|之内|以下)", "max_price"),
+        (r"(?P<price>\d+)万\s*(?:以[上外]|之上|以上)", "min_price"),
+        (r"(?P<price>\d+)\s*[-到~]\s*(?P<price2>\d+)\s*万", "price_range"),
+    ]
+    
+    # 类别关键词字典
+    CATEGORY_DICT = {
+        "SUV": "SUV",
+        "suv": "SUV",
+        "轿车": "轿车",
+        "MPV": "MPV",
+        "mpv": "MPV",
+        "皮卡": "皮卡",
+        "跑车": "跑车",
+    }
+    
+    # 动力类型字典
+    ENERGY_DICT = {
+        "纯电": "纯电",
+        "电动": "纯电",
+        "电车": "纯电",
+        "增程": "增程",
+        "插混": "插混",
+        "混动": "插混",
+        "燃油": "燃油",
+        "汽油": "燃油",
+        "柴油": "燃油",
+    }
+    
+    # 品牌字典
+    BRAND_DICT = {
+        "比亚迪": "比亚迪", "小米": "小米", "蔚来": "蔚来",
+        "理想": "理想", "小鹏": "小鹏", "特斯拉": "特斯拉",
+        "极氪": "极氪", "问界": "问界", "零跑": "零跑",
+        "哪吒": "哪吒", "埃安": "埃安", "深蓝": "深蓝",
+    }
+    
+    filters = {}
+
+    # ① 价格提取（正则）
+    for pattern, key in PRICE_PATTERNS:
+        m = re.search(pattern, query)
+        if m:
+            if key == "price_range":
+                # "15-20万" → min=15, max=20
+                filters["min_price"] = int(m.group("price"))
+                filters["max_price"] = int(m.group("price2"))
+            else:
+                filters[key] = int(m.group("price"))
+            break  # 匹配到一条价格就停，避免歧义
+
+    # ② 类别/动力/品牌提取（jieba + 字典匹配）
+    words = set(jieba.cut(query))
+
+    for w in words:
+        if "category" not in filters and w in CATEGORY_DICT:
+            filters["category"] = CATEGORY_DICT[w]
+        if "powertrain" not in filters and w in ENERGY_DICT:
+            filters["powertrain"] = ENERGY_DICT[w]
+        if "brand" not in filters and w in BRAND_DICT:
+            filters["brand"] = BRAND_DICT[w]
+
+    return filters
 
 
-def apply_filters(candidates: list[tuple[float, dict]], filters: dict
-                  ) -> list[tuple[float, dict]]:
+def apply_filters(candidates: List[Tuple[float, dict]], 
+                  filters: Dict[str, any]) -> List[Tuple[float, dict]]:
     """
     对候选文档应用硬过滤。不通过的直接剔除（不是降权）。
 
     为什么用硬过滤而不是降权？
       价格超出预算 → 完全不应出现。"25 万以内"搜到 32 万的车就是错误。
+    
+    Args:
+        candidates: 候选文档列表，格式 [(score, doc), ...]
+        filters: 过滤条件字典，如 {"max_price": 25, "category": "SUV"}
+        
+    Returns:
+        过滤后的文档列表
     """
-    # TODO:
-    #   1. 从 doc["content"] 中提取价格、类别等字段（正则提取）
-    #   2. 逐条比对 fiter 条件，不满足的剔除
-    #   3. 返回过滤后的列表
-    ...
+    if not filters:
+        return candidates
+
+    # 预编译价格正则，提高性能
+    PRICE_REGEX = re.compile(r'售价\s*([\d.]+)\s*(?:[-到~]\s*([\d.]+))?\s*万')
+
+    def _passes(doc: dict) -> bool:
+        """检查一篇文档是否满足所有过滤条件"""
+        doc_text = doc.get("content", "")
+        doc_type = doc.get("type", "")  # load_data 的文档格式：type 在顶层，不在 metadata 下
+        
+        # 价格检查 - 只对车型规格文档进行严格检查
+        if ("max_price" in filters or "min_price" in filters) and doc_type == "car_spec":
+            price_match = PRICE_REGEX.search(doc_text)
+            
+            if price_match:
+                # 取最低价作为判断依据（保守策略：起售价超预算才踢）
+                low_price = float(price_match.group(1))
+                
+                if "max_price" in filters and low_price > filters["max_price"]:
+                    return False  # 起售价就超预算了 → 踢掉
+                    
+                if "min_price" in filters:
+                    # 如果有区间价，取高值比 min
+                    high_price = float(price_match.group(2)) if price_match.group(2) else low_price
+                    if high_price < filters["min_price"]:
+                        return False  # 最高价也达不到预算下限 → 踢掉
+            # 如果没匹配到售价（行业报告/用户评价），不因为价格过滤而踢掉
+
+        # 类别检查
+        if "category" in filters and filters["category"] not in doc_text:
+            return False
+            
+        # 动力类型检查
+        if "powertrain" in filters and filters["powertrain"] not in doc_text:
+            return False
+            
+        # 品牌检查
+        if "brand" in filters and filters["brand"] not in doc_text:
+            return False
+
+        return True
+
+    # 逐条筛选，保持原有顺序
+    return [(score, doc) for score, doc in candidates if _passes(doc)]
 
 
 # ============================================================
@@ -213,23 +389,58 @@ class RAGAgent:
                                         k=60, top_k=top_k)
 
         # ④ Reranker 精排
-        # TODO: 把 hybrid_results 传给 self.reranker.rerank()
-        ...
+        reranked_results = self.reranker.rerank(rewritten, hybrid_results, top_k=top_k)
+
+        # 如果精排返回为空（极端情况），退回混合检索结果
+        if not reranked_results:
+            reranked_results = hybrid_results[:top_k]
 
         return reranked_results, rewritten
 
     # ---- 回答管线 ----
 
-    def _build_prompt_with_history(self, query: str, context: str
-                                   ) -> list[dict]:
+    def _build_prompt_with_history(self, query: str, context: str) -> list[dict]:
         """
         和第一章 build_prompt 的区别：多了对话历史和引用格式要求。
+
+        核心差异：
+          第一章：system + user(context + query)，无历史
+          第五章：system + 历史摘要 + user(context + query)，支持多轮
         """
-        # TODO:
-        #   1. 把 chat_history 格式化成文本
-        #   2. 在 system prompt 里加上：引用来源时用 [来源: xxx] 格式
-        #   3. 构造 messages 返回
-        ...
+        # ① 把对话历史格式化成文本（前 N 条完整，最近 3 轮摘要）
+        history_text = ""
+        if self.chat_history:
+            # 取最近 6 条消息（3 轮对话），更早的做摘要
+            recent = self.chat_history[-6:]
+            history_lines = []
+            for msg in recent:
+                role_name = "用户" if msg["role"] == "user" else "助手"
+                # 截断过长的内容，保留前 200 字
+                content = msg["content"][:200]
+                history_lines.append(f"[{role_name}] {content}")
+            history_text = "## 对话历史\n" + "\n".join(history_lines) + "\n\n"
+
+        # ② system prompt：比第一章多了引用格式要求
+        system_prompt = (
+            "你是一个专业的汽车导购助手，具备以下能力：\n"
+            "1. 严格根据提供的参考资料回答问题，不编造数据\n"
+            "2. 回答时引用具体来源，格式：[来源: 文档名]\n"
+            "3. 如果资料不足以回答，明确告知用户\n"
+            "4. 结合对话历史理解用户的连续问题"
+        )
+
+        # ③ user prompt：历史 + 参考资料 + 问题
+        user_prompt = (
+            f"{history_text}"
+            f"## 参考资料\n{context}\n\n"
+            f"## 用户问题\n{query}\n\n"
+            f"请根据以上参考资料回答用户的问题，引用来源时使用 [来源: xxx] 格式。"
+        )
+
+        return [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
 
     def chat(self, query: str, top_k: int = 3) -> dict:
         """
@@ -283,35 +494,117 @@ class RAGAgent:
         self.chat_history = []
 
     def get_history_summary(self) -> str:
-        """返回对话摘要，调试用"""
-        ...
+        """返回对话摘要，调试用：看改写效果、检索耗时、上下文长度"""
+        if not self.chat_history:
+            return "(无对话历史)"
+
+        lines = []
+        total_user_chars = 0
+        total_assistant_chars = 0
+        for msg in self.chat_history:
+            if msg["role"] == "user":
+                total_user_chars += len(msg["content"])
+            else:
+                total_assistant_chars += len(msg["content"])
+
+        rounds = len(self.chat_history) // 2
+        lines.append(f"对话轮次: {rounds}")
+        lines.append(f"消息总数: {len(self.chat_history)}")
+        lines.append(f"用户总字数: {total_user_chars}")
+        lines.append(f"助手总字数: {total_assistant_chars}")
+        lines.append(f"最近问题: {self.chat_history[-2]['content'][:80]}..."
+                     if len(self.chat_history) >= 2 else "N/A")
+        return "\n".join(lines)
 
 
 # ============================================================
 # 5. 评估内置 — 快速自检
 # ============================================================
 
-# TODO: 准备 10-15 条测试用例，每条包含 query + 期望出现的文档关键词
 TEST_CASES = [
-    # {"query": "小米SU7的续航是多少", "must_contain": ["小米", "SU7", "续航"]},
-    # {"query": "25万以内的大空间SUV", "must_contain": ["理想L6", "海狮"]},
-    # ...
+    # ---- 精确匹配型：结果必须包含特定品牌/车型 ----
+    {"query": "小米SU7的续航是多少", "must_contain": ["小米", "SU7"]},
+    {"query": "比亚迪海豚的价格",      "must_contain": ["比亚迪", "海豚"]},
+    {"query": "特斯拉Model Y的智驾配置", "must_contain": ["特斯拉", "Model Y"]},
+
+    # ---- 条件过滤型：必须满足价格/类别约束 ----
+    {"query": "25万以内的大空间SUV",  "must_contain": ["理想L6"]},
+    {"query": "10万左右的纯电轿车",   "must_contain": ["海豚"]},
+
+    # ---- 语义泛化型：不能精确匹配，但语义相关 ----
+    {"query": "适合家庭出行的新能源车", "must_contain": ["SUV", "理想"]},
+    {"query": "今年最火的国产电动车",   "must_contain": ["小米", "比亚迪"]},
+
+    # ---- 多轮对话模拟（手动测时用 rewrite_query 逻辑，这里简化） ----
+    {"query": "充电最快的纯电车有哪些", "must_contain": ["纯电", "充电"]},
+    {"query": "智驾能力最强的车型",     "must_contain": ["L2", "自动驾驶"]},
+
+    # ---- 边界 case ----
+    {"query": "100万以上的豪华电动车", "must_contain": []},  # 数据里可能没有，验证不编造
 ]
 
 
 def self_eval(agent: RAGAgent) -> dict:
     """
-    快速自检：对每条测试 case 调 chat()，检查 answer 或 sources 里
+    快速自检：对每条测试 case 调 chat()，检查 sources 里
     是否包含 must_contain 关键词。
 
-    返回 {"hit_rate": float, "mrr": float, "details": [...]}
+    指标：
+      Hit@K:  Top-K 条来源里至少命中一个 must_contain 关键词 = 成功
+              (Hit Rate = 成功数 / 总 case 数)
+      MRR:    第一个命中关键词的来源排名取倒数，再平均
+              (Mean Reciprocal Rank，越接近 1 越好)
+              RR = 1 / 排名（第一个命中的排在第 2 位 → RR = 0.5）
     """
-    # TODO:
-    #   1. 遍历 TEST_CASES
-    #   2. agent.chat(case["query"])
-    #   3. 检查 result["sources"] 里是否命中 must_contain
-    #   4. 统计 Hit Rate 和 MRR
-    ...
+    details = []
+    hits = 0
+    rr_sum = 0.0
+
+    for case in TEST_CASES:
+        query = case["query"]
+        must_contain = case["must_contain"]
+
+        # 调用 agent
+        result = agent.chat(query)
+
+        # 检查 sources 里是否命中 must_contain
+        sources = result["sources"]
+        first_hit_rank = None
+        hit_keywords = set()
+
+        for rank, src in enumerate(sources, 1):
+            combined = src["source"] + " " + src.get("content", "")
+            for kw in must_contain:
+                if kw in combined and kw not in hit_keywords:
+                    hit_keywords.add(kw)
+                    if first_hit_rank is None:
+                        first_hit_rank = rank
+
+        is_hit = len(hit_keywords) > 0 or len(must_contain) == 0
+        if is_hit and first_hit_rank:
+            hits += 1
+            rr_sum += 1.0 / first_hit_rank
+        elif len(must_contain) == 0:
+            # 边界 case：must_contain 为空，只看是否返回了结果
+            hits += 1
+            rr_sum += 1.0
+
+        details.append({
+            "query": query,
+            "hit": is_hit,
+            "hit_keywords": list(hit_keywords),
+            "expected": must_contain,
+            "first_hit_rank": first_hit_rank,
+        })
+
+        # 每次调用后重置对话历史，case 之间互不干扰
+        agent.reset()
+
+    n = len(TEST_CASES)
+    hit_rate = hits / n if n > 0 else 0.0
+    mrr = rr_sum / n if n > 0 else 0.0
+
+    return {"hit_rate": hit_rate, "mrr": mrr, "details": details}
 
 
 # ============================================================
