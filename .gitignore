@@ -5,7 +5,7 @@ __pycache__/
 *.pyc
 *.pyo
 # 本地下载的大模型权重（核心！）
-rag-project/models/
+agent-dev-project/models/
 Paradigm-and-Framework/models/
 # 换行无关，顺带加
 *.log
