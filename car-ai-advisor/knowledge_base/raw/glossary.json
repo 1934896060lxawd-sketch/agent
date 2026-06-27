@@ -1,0 +1,151 @@
+{
+  "description": "智能汽车行业术语词典，覆盖三电系统、智能驾驶、底盘悬架、车身结构等核心领域",
+  "version": "2.0",
+  "updated": "2026-06-27",
+  "terms": [
+    {
+      "term": "CLTC",
+      "full_name": "中国轻型汽车测试循环",
+      "category": "续航/能耗",
+      "explanation": "中国使用的电动车续航测试标准，测试条件较WLTP宽松，续航数值通常比WLTP高15%-25%，比EPA高25%-35%。实际续航通常为CLTC的70%-85%。"
+    },
+    {
+      "term": "WLTP",
+      "full_name": "全球轻型车测试规程",
+      "category": "续航/能耗",
+      "explanation": "欧洲主导的全球统一测试标准，测试工况比CLTC严格，续航数据更接近实际使用。WLTP续航约为CLTC续航的80%-85%。"
+    },
+    {
+      "term": "刀片电池",
+      "full_name": "比亚迪磷酸铁锂刀片电池",
+      "category": "三电系统",
+      "explanation": "比亚迪自研的磷酸铁锂电池，采用长条状电芯排列，通过针刺实验不起火不爆炸。能量密度比传统磷酸铁锂高30%，成本比三元锂低20%。"
+    },
+    {
+      "term": "800V高压平台",
+      "full_name": "800伏高压电气架构",
+      "category": "三电系统",
+      "explanation": "整车电气系统工作电压提升至800V（传统为400V），相同功率下电流减半，线束更细更轻，充电功率可达400kW以上。代表车型：小鹏G9、极氪007、小米SU7。"
+    },
+    {
+      "term": "SiC",
+      "full_name": "碳化硅功率器件",
+      "category": "三电系统",
+      "explanation": "碳化硅是第三代半导体材料，用于电驱逆变器。相比传统硅基IGBT，SiC开关损耗降低70%，可提升续航5%-10%，是800V高压平台的标配。"
+    },
+    {
+      "term": "CTB",
+      "full_name": "Cell to Body 电池车身一体化",
+      "category": "三电系统",
+      "explanation": "电池包直接作为车身结构的一部分，电芯上盖=车厢地板。取消传统电池包外壳，空间利用率提升到66%，车身扭转刚度提升一倍。比亚迪海豹/海狮系列率先搭载。"
+    },
+    {
+      "term": "DM-i",
+      "full_name": "Dual Mode Intelligent 超级混动",
+      "category": "动力类型",
+      "explanation": "比亚迪的插电混动技术，以电驱为主、发动机为辅。中低速纯电驱动，高速发动机直驱，亏电油耗可低至3.8L/100km。代表车型：秦PLUS DM-i、海豹06 DM-i。"
+    },
+    {
+      "term": "增程式",
+      "full_name": "Range Extended Electric Vehicle",
+      "category": "动力类型",
+      "explanation": "发动机仅用于发电，不直接驱动车轮，由电动机驱动。优点是纯电驾驶体验+无续航焦虑；缺点是亏电油耗较高、发动机噪音大。代表车型：理想L6/L7/L8/L9、问界M7/M9。"
+    },
+    {
+      "term": "BaaS",
+      "full_name": "Battery as a Service 电池即服务",
+      "category": "商业模式",
+      "explanation": "蔚来推出的电池租赁方案：购车时不买电池，每月支付租金（75度980元/月，100度1680元/月），车价直降7-12.8万。优势：初始购车成本低、电池可升级、无电池衰减顾虑。"
+    },
+    {
+      "term": "NOA",
+      "full_name": "Navigate on Autopilot 导航辅助驾驶",
+      "category": "智能驾驶",
+      "explanation": "基于导航路线的高速/城市辅助驾驶功能，可自动变道、进出匝道、超车。高速NOA已普及，城市NOA是当前竞争焦点。各品牌叫法不同：特斯拉FSD、小鹏XNGP、华为ADS、蔚来NAD。"
+    },
+    {
+      "term": "LiDAR",
+      "full_name": "Light Detection and Ranging 激光雷达",
+      "category": "智能驾驶",
+      "explanation": "通过发射激光束测量物体距离和形状的传感器，每秒可获取数百万个三维点云数据。与摄像头互补：摄像头擅长识别颜色和文字，激光雷达擅长测距和暗光环境。"
+    },
+    {
+      "term": "Orin-X",
+      "full_name": "NVIDIA DRIVE Orin-X 智驾芯片",
+      "category": "智能驾驶",
+      "explanation": "英伟达的自动驾驶AI芯片，单颗算力254 TOPS。主流方案：双Orin-X组合508 TOPS（小鹏P7i/G9、小米SU7、蔚来全系）。是当前中国新势力的标配智驾芯片。"
+    },
+    {
+      "term": "TOPS",
+      "full_name": "Tera Operations Per Second 万亿次/秒",
+      "category": "智能驾驶",
+      "explanation": "衡量AI芯片算力的单位，1 TOPS = 每秒1万亿次INT8运算。城市NOA通常需要200+ TOPS算力支持。"
+    },
+    {
+      "term": "CDC",
+      "full_name": "Continuous Damping Control 连续阻尼控制",
+      "category": "底盘悬架",
+      "explanation": "通过电磁阀实时调节减震器阻尼力的悬架系统，可在舒适和运动之间切换。与空气弹簧配合使用效果最佳。代表车型：理想L6/L9、比亚迪汉L。"
+    },
+    {
+      "term": "双叉臂悬架",
+      "full_name": "Double Wishbone Suspension",
+      "category": "底盘悬架",
+      "explanation": "上下两个A型臂控制车轮运动的独立悬架，多用于高端车和运动车型。优点：过弯侧倾小、轮胎贴地性好；缺点：成本高、占用空间大。"
+    },
+    {
+      "term": "热泵空调",
+      "full_name": "Heat Pump Air Conditioning",
+      "category": "三电系统",
+      "explanation": "利用压缩机和制冷剂循环从环境中吸收热量来制热的空调系统。相比PTC电加热，热泵制热效率高3-4倍，冬季可减少续航衰减30%-50%。"
+    },
+    {
+      "term": "V2L",
+      "full_name": "Vehicle to Load 对外放电",
+      "category": "三电系统",
+      "explanation": "车辆电池通过充电口反向输出220V交流电，可为露营电器、电动工具等供电。比亚迪车型一般支持3.3kW-6.6kW V2L放电。"
+    },
+    {
+      "term": "单踏板模式",
+      "full_name": "One-Pedal Driving",
+      "category": "驾驶体验",
+      "explanation": "松开加速踏板时，电机动能回收产生强烈减速效果，日常驾驶几乎不需要踩刹车。特斯拉是单踏板模式的代表。优点：能量回收效率高、驾驶省力；缺点：需要适应期，紧急情况可能误操作。"
+    },
+    {
+      "term": "R744",
+      "full_name": "二氧化碳热泵（R744冷媒）",
+      "category": "三电系统",
+      "explanation": "以CO₂为冷媒的热泵空调，相比传统R134a/R1234yf冷媒，R744在-20℃极寒环境下仍能有效制热，是北方冬季续航的救星。大众ID系列率先搭载。"
+    },
+    {
+      "term": "线控转向",
+      "full_name": "Steer-by-Wire",
+      "category": "底盘悬架",
+      "explanation": "方向盘与转向轮之间无机械连接，通过电信号控制转向。优点：转向比可变（低速灵敏高速稳定）、可配合自动驾驶；缺点：需要冗余系统保证安全。丰田bZ4X/雷克萨斯RZ率先量产。"
+    },
+    {
+      "term": "一体化压铸",
+      "full_name": "Giga Casting",
+      "category": "车身制造",
+      "explanation": "使用超大吨位压铸机（6000-12000吨）将车身底板等大型部件一次压铸成型，替代传统70-100个零件焊接。特斯拉率先采用。优点：减重10%-20%、减少焊点、降本；缺点：事故后维修困难。"
+    },
+    {
+      "term": "iTAC",
+      "full_name": "intelligence Torque Adaption Control 智能扭矩控制",
+      "category": "驾驶体验",
+      "explanation": "比亚迪自研的智能扭矩分配系统，通过电机毫秒级响应优势，在打滑前主动调节扭矩输出，替代传统ESP刹车干预方式。冰雪路面起步更平稳，弯道操控更精准。"
+    },
+    {
+      "term": "云辇",
+      "full_name": "比亚迪智能车身控制系统",
+      "category": "底盘悬架",
+      "explanation": "比亚迪智能车身控制系统的统称，分为云辇-C（CDC阻尼控制）、云辇-A（空气悬架）、云辇-P（液压悬架）、云辇-X（全主动悬架，仰望U9搭载）。"
+    },
+    {
+      "term": "兆瓦闪充",
+      "full_name": "比亚迪1000V超快充技术",
+      "category": "三电系统",
+      "explanation": "比亚迪最高功率充电技术，峰值功率达1000kW（1兆瓦），5分钟可补能400km。需要专用充电桩支持，首搭车型为海豹08。"
+    }
+  ]
+}

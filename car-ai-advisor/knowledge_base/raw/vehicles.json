@@ -1,0 +1,911 @@
+[
+  {
+    "id": "v_001",
+    "brand": "比亚迪",
+    "model": "海豹08",
+    "full_name": "比亚迪海豹08 中大型智能运动旗舰轿车",
+    "category": "中大型纯电轿车",
+    "price_range": "25-32万元",
+    "target_users": "30-45岁城市中产，追求科技感和驾驶乐趣",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂刀片电池（半固态）",
+      "battery_capacity_kwh": 100,
+      "cltc_range_km": 720,
+      "wltp_range_km": 610,
+      "fast_charge": "兆瓦级闪充，5分钟补能400km",
+      "slow_charge": "11kW交流，8小时充满",
+      "energy_density_wh_per_kg": 300
+    },
+    "performance": {
+      "motor_power_kw": 380,
+      "torque_nm": 700,
+      "zero_to_hundred_seconds": 3.8,
+      "top_speed_kmh": 240,
+      "drive_type": "后驱/四驱"
+    },
+    "dimensions": {
+      "length_mm": 5050,
+      "width_mm": 1960,
+      "height_mm": 1460,
+      "wheelbase_mm": 2980,
+      "seats": 5,
+      "trunk_volume_l": 480
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "DiPilot 300",
+      "lidar": true,
+      "lidar_count": 2,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true
+    },
+    "interior": {
+      "screen_size_inch": 15.6,
+      "screen_rotation": true,
+      "hud": true,
+      "sound_system": "丹拿12扬声器",
+      "seat_material": "Nappa真皮",
+      "seat_heating": true,
+      "seat_ventilation": true,
+      "ambient_light": "128色"
+    },
+    "key_features": ["兆瓦闪充", "激光雷达", "Ocean-S概念车设计", "云辇智能车身控制", "CTB电池车身一体化"],
+    "warranty": "整车6年/15万公里，三电系统终身质保",
+    "listing_date": "2026年Q1",
+    "competitors": ["特斯拉Model 3", "小鹏P7i", "蔚来ET5"]
+  },
+  {
+    "id": "v_002",
+    "brand": "比亚迪",
+    "model": "汉L",
+    "full_name": "比亚迪汉L 中大型旗舰轿车",
+    "category": "中大型轿车",
+    "price_range": "20.98-27.98万元",
+    "target_users": "35-50岁商务人士/家庭用户，注重品牌和舒适性",
+    "powertrain": {
+      "type": "纯电动/插混",
+      "battery_type": "磷酸铁锂刀片电池",
+      "battery_capacity_kwh": 85,
+      "cltc_range_km": 715,
+      "wltp_range_km": 600,
+      "fast_charge": "800V高压快充，30%-80%仅需25分钟",
+      "slow_charge": "7kW交流，12小时充满",
+      "energy_density_wh_per_kg": 260
+    },
+    "performance": {
+      "motor_power_kw": 360,
+      "torque_nm": 650,
+      "zero_to_hundred_seconds": 3.9,
+      "top_speed_kmh": 230,
+      "drive_type": "四驱"
+    },
+    "dimensions": {
+      "length_mm": 4995,
+      "width_mm": 1910,
+      "height_mm": 1495,
+      "wheelbase_mm": 2920,
+      "seats": 5,
+      "trunk_volume_l": 470
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "DiPilot 200",
+      "lidar": true,
+      "lidar_count": 1,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true
+    },
+    "interior": {
+      "screen_size_inch": 15.6,
+      "screen_rotation": true,
+      "hud": true,
+      "sound_system": "丹拿12扬声器",
+      "seat_material": "Nappa真皮",
+      "seat_heating": true,
+      "seat_ventilation": true,
+      "ambient_light": "64色"
+    },
+    "key_features": ["刀片电池", "云辇-C悬架", "DiPilot 200智驾", "后排老板键", "双层隔音玻璃"],
+    "warranty": "整车6年/15万公里，三电系统终身质保",
+    "listing_date": "2025年Q3",
+    "competitors": ["特斯拉Model Y", "小鹏P7", "极氪007"]
+  },
+  {
+    "id": "v_003",
+    "brand": "比亚迪",
+    "model": "海豹06 DM-i",
+    "full_name": "比亚迪海豹06 DM-i 中型插混轿车",
+    "category": "中型插混轿车",
+    "price_range": "9.98-14.98万元",
+    "target_users": "25-35岁首购用户，预算10-15万，重视油耗经济性",
+    "powertrain": {
+      "type": "插电混动（DM-i）",
+      "engine": "1.5L骁云混动专用发动机",
+      "battery_type": "磷酸铁锂刀片电池",
+      "battery_capacity_kwh": 18.3,
+      "pure_electric_range_km": 120,
+      "combined_range_km": 1500,
+      "fuel_consumption_l_per_100km": 3.8,
+      "fast_charge": "40kW直流，30%-80%需35分钟"
+    },
+    "performance": {
+      "motor_power_kw": 145,
+      "system_power_kw": 210,
+      "zero_to_hundred_seconds": 7.2,
+      "top_speed_kmh": 185,
+      "drive_type": "前驱"
+    },
+    "dimensions": {
+      "length_mm": 4830,
+      "width_mm": 1875,
+      "height_mm": 1495,
+      "wheelbase_mm": 2790,
+      "seats": 5,
+      "trunk_volume_l": 450
+    },
+    "smart_driving": {
+      "level": "L2",
+      "chip": "DiPilot 100",
+      "lidar": false,
+      "highway_noa": false,
+      "city_noa": false,
+      "auto_parking": false
+    },
+    "interior": {
+      "screen_size_inch": 12.8,
+      "screen_rotation": true,
+      "hud": false,
+      "sound_system": "6扬声器",
+      "seat_material": "仿皮",
+      "seat_heating": false,
+      "seat_ventilation": false,
+      "ambient_light": "无"
+    },
+    "key_features": ["超低油耗", "刀片电池安全", "DM-i超级混动", "10万级中型车尺寸"],
+    "warranty": "整车6年/15万公里，三电系统8年/15万公里",
+    "listing_date": "2025年Q2",
+    "competitors": ["吉利银河L6", "长安启源A07", "荣威D7 DMH"]
+  },
+  {
+    "id": "v_004",
+    "brand": "特斯拉",
+    "model": "Model 3",
+    "full_name": "特斯拉Model 3 焕新版 纯电中型轿车",
+    "category": "中型纯电轿车",
+    "price_range": "23.59-33.59万元",
+    "target_users": "25-40岁科技爱好者，认可特斯拉品牌，追求极简设计",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂（标续）/ 三元锂（长续）",
+      "battery_capacity_kwh": 60,
+      "cltc_range_km": 606,
+      "wltp_range_km": 513,
+      "fast_charge": "V3超充，15分钟补能250km",
+      "slow_charge": "11kW交流，6.5小时充满",
+      "energy_density_wh_per_kg": 275
+    },
+    "performance": {
+      "motor_power_kw": 208,
+      "torque_nm": 420,
+      "zero_to_hundred_seconds": 6.1,
+      "top_speed_kmh": 200,
+      "drive_type": "后驱"
+    },
+    "dimensions": {
+      "length_mm": 4720,
+      "width_mm": 1848,
+      "height_mm": 1441,
+      "wheelbase_mm": 2875,
+      "seats": 5,
+      "trunk_volume_l": 425
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "HW4.0 自研",
+      "lidar": false,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true,
+      "fsd_available": true
+    },
+    "interior": {
+      "screen_size_inch": 15.4,
+      "screen_rotation": false,
+      "hud": false,
+      "sound_system": "自研9扬声器",
+      "seat_material": "仿皮",
+      "seat_heating": true,
+      "seat_ventilation": false,
+      "ambient_light": "单色白"
+    },
+    "key_features": ["纯视觉智驾", "V3超充网络", "OTA持续升级", "极简内饰设计", "五星安全"],
+    "warranty": "整车4年/8万公里，电池8年/16万公里",
+    "listing_date": "2025年Q4焕新版",
+    "competitors": ["比亚迪海豹08", "小鹏P7i", "蔚来ET5"]
+  },
+  {
+    "id": "v_005",
+    "brand": "特斯拉",
+    "model": "Model Y",
+    "full_name": "特斯拉Model Y 中型纯电SUV",
+    "category": "中型纯电SUV",
+    "price_range": "25.89-36.39万元",
+    "target_users": "30-45岁家庭用户，需要大空间兼顾品牌和实用性",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂（标续）/ 三元锂（长续）",
+      "battery_capacity_kwh": 78.4,
+      "cltc_range_km": 688,
+      "wltp_range_km": 580,
+      "fast_charge": "V3超充，15分钟补能270km",
+      "slow_charge": "11kW交流，7.5小时充满",
+      "energy_density_wh_per_kg": 270
+    },
+    "performance": {
+      "motor_power_kw": 331,
+      "torque_nm": 559,
+      "zero_to_hundred_seconds": 5.0,
+      "top_speed_kmh": 217,
+      "drive_type": "四驱"
+    },
+    "dimensions": {
+      "length_mm": 4750,
+      "width_mm": 1920,
+      "height_mm": 1624,
+      "wheelbase_mm": 2890,
+      "seats": 5,
+      "trunk_volume_l": 854
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "HW4.0 自研",
+      "lidar": false,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true,
+      "fsd_available": true
+    },
+    "interior": {
+      "screen_size_inch": 15.4,
+      "screen_rotation": false,
+      "hud": false,
+      "sound_system": "自研13扬声器",
+      "seat_material": "仿皮",
+      "seat_heating": true,
+      "seat_ventilation": false,
+      "ambient_light": "单色白"
+    },
+    "key_features": ["超大储物空间", "全球销冠", "V3超充", "纯视觉智驾", "露营模式"],
+    "warranty": "整车4年/8万公里，电池8年/19.2万公里",
+    "listing_date": "2025年Q1改款",
+    "competitors": ["蔚来ES6", "小鹏G6", "理想L6"]
+  },
+  {
+    "id": "v_006",
+    "brand": "蔚来",
+    "model": "ET5",
+    "full_name": "蔚来ET5 中型智能电动轿跑",
+    "category": "中型纯电轿车",
+    "price_range": "29.8-38.6万元",
+    "target_users": "28-40岁都市精英，注重服务和换电体验",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "三元锂/半固态电池",
+      "battery_capacity_kwh": 75,
+      "cltc_range_km": 560,
+      "wltp_range_km": 475,
+      "fast_charge": "800V快充，20%-80%需20分钟",
+      "battery_swap": "3分钟换电，全系支持",
+      "energy_density_wh_per_kg": 285
+    },
+    "performance": {
+      "motor_power_kw": 360,
+      "torque_nm": 700,
+      "zero_to_hundred_seconds": 4.0,
+      "top_speed_kmh": 200,
+      "drive_type": "四驱"
+    },
+    "dimensions": {
+      "length_mm": 4790,
+      "width_mm": 1960,
+      "height_mm": 1499,
+      "wheelbase_mm": 2888,
+      "seats": 5,
+      "trunk_volume_l": 381
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "NIO Adam 超算平台（4×Orin X）",
+      "lidar": true,
+      "lidar_count": 1,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true
+    },
+    "interior": {
+      "screen_size_inch": 12.8,
+      "screen_rotation": false,
+      "hud": true,
+      "sound_system": "杜比全景声23扬声器",
+      "seat_material": "Nappa真皮",
+      "seat_heating": true,
+      "seat_ventilation": true,
+      "ambient_light": "256色"
+    },
+    "key_features": ["换电3分钟", "NOMI语音助手", "NAD全栈智驾", "BaaS电池租赁", "NIO House"],
+    "warranty": "整车3年/12万公里（BaaS方案可延保），三电8年/12万公里",
+    "listing_date": "2025年Q2",
+    "competitors": ["特斯拉Model 3", "小鹏P7i", "比亚迪海豹08"]
+  },
+  {
+    "id": "v_007",
+    "brand": "蔚来",
+    "model": "ES6",
+    "full_name": "蔚来ES6 中型智能电动SUV",
+    "category": "中型纯电SUV",
+    "price_range": "33.8-42.6万元",
+    "target_users": "30-45岁家庭用户，看重服务、换电和智能座舱",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "三元锂/半固态电池",
+      "battery_capacity_kwh": 75,
+      "cltc_range_km": 490,
+      "wltp_range_km": 415,
+      "fast_charge": "800V快充，20%-80%需20分钟",
+      "battery_swap": "3分钟换电，全系支持",
+      "energy_density_wh_per_kg": 285
+    },
+    "performance": {
+      "motor_power_kw": 360,
+      "torque_nm": 700,
+      "zero_to_hundred_seconds": 4.5,
+      "top_speed_kmh": 200,
+      "drive_type": "四驱"
+    },
+    "dimensions": {
+      "length_mm": 4854,
+      "width_mm": 1995,
+      "height_mm": 1703,
+      "wheelbase_mm": 2915,
+      "seats": 5,
+      "trunk_volume_l": 579
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "NIO Adam（4×Orin X）",
+      "lidar": true,
+      "lidar_count": 1,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true
+    },
+    "interior": {
+      "screen_size_inch": 12.8,
+      "screen_rotation": false,
+      "hud": true,
+      "sound_system": "杜比全景声23扬声器",
+      "seat_material": "Nappa真皮",
+      "seat_heating": true,
+      "seat_ventilation": true,
+      "ambient_light": "256色"
+    },
+    "key_features": ["换电3分钟", "女王副驾", "NOMI Mate 2.0", "BaaS电池租赁", "空气悬架"],
+    "warranty": "整车3年/12万公里，三电8年/12万公里",
+    "listing_date": "2025年Q1",
+    "competitors": ["特斯拉Model Y", "理想L6", "小鹏G9"]
+  },
+  {
+    "id": "v_008",
+    "brand": "小鹏",
+    "model": "P7i",
+    "full_name": "小鹏P7i 智能纯电轿跑",
+    "category": "中型纯电轿车",
+    "price_range": "22.39-28.99万元",
+    "target_users": "25-35岁科技极客，看重智驾能力和操控体验",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "三元锂",
+      "battery_capacity_kwh": 86.2,
+      "cltc_range_km": 702,
+      "wltp_range_km": 590,
+      "fast_charge": "800V SiC，10%-80%仅需15分钟",
+      "slow_charge": "11kW交流，8小时充满",
+      "energy_density_wh_per_kg": 290
+    },
+    "performance": {
+      "motor_power_kw": 348,
+      "torque_nm": 757,
+      "zero_to_hundred_seconds": 3.9,
+      "top_speed_kmh": 200,
+      "drive_type": "四驱"
+    },
+    "dimensions": {
+      "length_mm": 4888,
+      "width_mm": 1896,
+      "height_mm": 1450,
+      "wheelbase_mm": 2998,
+      "seats": 5,
+      "trunk_volume_l": 440
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "双Orin-X（508 TOPS）",
+      "lidar": true,
+      "lidar_count": 2,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true
+    },
+    "interior": {
+      "screen_size_inch": 14.96,
+      "screen_rotation": false,
+      "hud": false,
+      "sound_system": "丹拿18扬声器",
+      "seat_material": "Nappa真皮",
+      "seat_heating": true,
+      "seat_ventilation": true,
+      "ambient_light": "128色"
+    },
+    "key_features": ["XNGP全场景智驾", "800V Sic快充", "前双叉臂后五连杆", "双激光雷达", "AI天玑系统"],
+    "warranty": "整车5年/12万公里，三电8年/16万公里",
+    "listing_date": "2025年Q1",
+    "competitors": ["特斯拉Model 3", "蔚来ET5", "比亚迪海豹08"]
+  },
+  {
+    "id": "v_009",
+    "brand": "小鹏",
+    "model": "G9",
+    "full_name": "小鹏G9 中大型智能旗舰SUV",
+    "category": "中大型纯电SUV",
+    "price_range": "26.39-35.99万元",
+    "target_users": "30-45岁家庭用户，追求极致智驾和舒适乘坐",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "三元锂",
+      "battery_capacity_kwh": 98,
+      "cltc_range_km": 702,
+      "wltp_range_km": 590,
+      "fast_charge": "800V SiC，10%-80%仅需15分钟",
+      "slow_charge": "11kW交流，9小时充满",
+      "energy_density_wh_per_kg": 288
+    },
+    "performance": {
+      "motor_power_kw": 405,
+      "torque_nm": 717,
+      "zero_to_hundred_seconds": 3.9,
+      "top_speed_kmh": 200,
+      "drive_type": "四驱"
+    },
+    "dimensions": {
+      "length_mm": 4891,
+      "width_mm": 1937,
+      "height_mm": 1680,
+      "wheelbase_mm": 2998,
+      "seats": 5,
+      "trunk_volume_l": 660
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "双Orin-X（508 TOPS）",
+      "lidar": true,
+      "lidar_count": 2,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true
+    },
+    "interior": {
+      "screen_size_inch": 14.96,
+      "screen_rotation": false,
+      "hud": false,
+      "sound_system": "丹拿28扬声器（5D音乐座舱）",
+      "seat_material": "Nappa真皮",
+      "seat_heating": true,
+      "seat_ventilation": true,
+      "ambient_light": "128色"
+    },
+    "key_features": ["XNGP全场景智驾", "5D音乐座舱", "双腔空气悬架", "800V超快充", "3.9秒破百"],
+    "warranty": "整车5年/12万公里，三电8年/16万公里",
+    "listing_date": "2025年Q3",
+    "competitors": ["蔚来ES6", "理想L7", "特斯拉Model Y"]
+  },
+  {
+    "id": "v_010",
+    "brand": "理想",
+    "model": "L6",
+    "full_name": "理想L6 家庭五座豪华SUV",
+    "category": "中大型增程SUV",
+    "price_range": "24.98-28.98万元",
+    "target_users": "28-40岁家庭用户，有长途需求，拒绝续航焦虑",
+    "powertrain": {
+      "type": "增程式电动",
+      "engine": "1.5T四缸增程器（仅发电）",
+      "battery_type": "三元锂",
+      "battery_capacity_kwh": 36.8,
+      "pure_electric_range_km": 212,
+      "combined_range_km": 1390,
+      "fuel_consumption_l_per_100km": 7.6,
+      "fast_charge": "75kW直流，20%-80%需25分钟"
+    },
+    "performance": {
+      "motor_power_kw": 300,
+      "torque_nm": 529,
+      "zero_to_hundred_seconds": 5.4,
+      "top_speed_kmh": 180,
+      "drive_type": "四驱"
+    },
+    "dimensions": {
+      "length_mm": 4925,
+      "width_mm": 1960,
+      "height_mm": 1735,
+      "wheelbase_mm": 2920,
+      "seats": 5,
+      "trunk_volume_l": 810
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "地平线征程5（128 TOPS）",
+      "lidar": true,
+      "lidar_count": 1,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true
+    },
+    "interior": {
+      "screen_size_inch": 15.7,
+      "screen_rotation": false,
+      "hud": true,
+      "sound_system": "铂金音响19扬声器",
+      "seat_material": "Nappa真皮",
+      "seat_heating": true,
+      "seat_ventilation": true,
+      "ambient_light": "256色"
+    },
+    "key_features": ["增程无焦虑", "CDC悬架", "大五座空间", "冰箱彩电大沙发", "理想同学GPT"],
+    "warranty": "整车5年/10万公里，三电8年/16万公里",
+    "listing_date": "2025年Q2",
+    "competitors": ["特斯拉Model Y", "蔚来ES6", "问界M7"]
+  },
+  {
+    "id": "v_011",
+    "brand": "理想",
+    "model": "L9",
+    "full_name": "理想L9 全尺寸旗舰SUV",
+    "category": "全尺寸增程SUV",
+    "price_range": "42.98-45.98万元",
+    "target_users": "35-50岁高净值家庭，需要三排六座，家庭出行+商务",
+    "powertrain": {
+      "type": "增程式电动",
+      "engine": "1.5T四缸增程器（仅发电）",
+      "battery_type": "三元锂",
+      "battery_capacity_kwh": 44.5,
+      "pure_electric_range_km": 215,
+      "combined_range_km": 1315,
+      "fuel_consumption_l_per_100km": 8.8,
+      "fast_charge": "75kW直流，20%-80%需30分钟"
+    },
+    "performance": {
+      "motor_power_kw": 330,
+      "torque_nm": 620,
+      "zero_to_hundred_seconds": 5.3,
+      "top_speed_kmh": 180,
+      "drive_type": "四驱"
+    },
+    "dimensions": {
+      "length_mm": 5218,
+      "width_mm": 1998,
+      "height_mm": 1800,
+      "wheelbase_mm": 3105,
+      "seats": 6,
+      "trunk_volume_l": 332
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "双Orin-X（508 TOPS）",
+      "lidar": true,
+      "lidar_count": 1,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true
+    },
+    "interior": {
+      "screen_size_inch": 15.7,
+      "screen_rotation": false,
+      "hud": true,
+      "sound_system": "杜比全景声21扬声器",
+      "seat_material": "Nappa真皮",
+      "seat_heating": true,
+      "seat_ventilation": true,
+      "ambient_light": "256色"
+    },
+    "key_features": ["三排六座", "后排娱乐屏", "冰箱", "双腔空悬", "魔毯2.0"],
+    "warranty": "整车5年/10万公里，三电8年/16万公里",
+    "listing_date": "2025年Q1",
+    "competitors": ["问界M9", "蔚来ES8", "奔驰GLS"]
+  },
+  {
+    "id": "v_012",
+    "brand": "小米",
+    "model": "SU7",
+    "full_name": "小米SU7 C级高性能纯电轿车",
+    "category": "中大型纯电轿车",
+    "price_range": "21.59-29.99万元",
+    "target_users": "25-40岁科技粉/米粉，追求性能和智能生态联动",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂（标准版）/ 三元锂（Max版）",
+      "battery_capacity_kwh": 101,
+      "cltc_range_km": 835,
+      "wltp_range_km": 700,
+      "fast_charge": "871V SiC，12分钟补能500km",
+      "slow_charge": "11kW交流，9小时充满",
+      "energy_density_wh_per_kg": 295
+    },
+    "performance": {
+      "motor_power_kw": 495,
+      "torque_nm": 838,
+      "zero_to_hundred_seconds": 2.78,
+      "top_speed_kmh": 265,
+      "drive_type": "四驱"
+    },
+    "dimensions": {
+      "length_mm": 4997,
+      "width_mm": 1963,
+      "height_mm": 1455,
+      "wheelbase_mm": 3000,
+      "seats": 5,
+      "trunk_volume_l": 517
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "双Orin-X（508 TOPS）",
+      "lidar": true,
+      "lidar_count": 1,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true
+    },
+    "interior": {
+      "screen_size_inch": 16.1,
+      "screen_rotation": false,
+      "hud": true,
+      "sound_system": "小米自研25扬声器",
+      "seat_material": "Nappa真皮",
+      "seat_heating": true,
+      "seat_ventilation": true,
+      "ambient_light": "256色"
+    },
+    "key_features": ["2.78秒破百", "871V超快充", "澎湃OS生态", "小米人车家全生态", "电动尾翼"],
+    "warranty": "整车5年/10万公里，三电8年/16万公里",
+    "listing_date": "2025年Q1",
+    "competitors": ["特斯拉Model 3", "极氪007", "小鹏P7i"]
+  },
+  {
+    "id": "v_013",
+    "brand": "极氪",
+    "model": "007",
+    "full_name": "极氪007 豪华纯电轿车",
+    "category": "中型纯电轿车",
+    "price_range": "20.99-29.99万元",
+    "target_users": "28-40岁追求豪华感和性能的用户",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂/三元锂",
+      "battery_capacity_kwh": 100,
+      "cltc_range_km": 870,
+      "wltp_range_km": 730,
+      "fast_charge": "800V，充电15分钟续航610km",
+      "slow_charge": "11kW交流，9.5小时充满",
+      "energy_density_wh_per_kg": 290
+    },
+    "performance": {
+      "motor_power_kw": 475,
+      "torque_nm": 710,
+      "zero_to_hundred_seconds": 2.84,
+      "top_speed_kmh": 210,
+      "drive_type": "四驱"
+    },
+    "dimensions": {
+      "length_mm": 4865,
+      "width_mm": 1900,
+      "height_mm": 1450,
+      "wheelbase_mm": 2928,
+      "seats": 5,
+      "trunk_volume_l": 462
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "双Orin-X（508 TOPS）",
+      "lidar": true,
+      "lidar_count": 1,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true
+    },
+    "interior": {
+      "screen_size_inch": 15.4,
+      "screen_rotation": false,
+      "hud": true,
+      "sound_system": "Yamaha 21扬声器",
+      "seat_material": "Nappa真皮",
+      "seat_heating": true,
+      "seat_ventilation": true,
+      "ambient_light": "256色"
+    },
+    "key_features": ["870km超长续航", "2.84秒破百", "一体式智慧灯幕", "800V全栈", "浩瀚架构"],
+    "warranty": "整车4年/10万公里，三电终身质保（首任车主）",
+    "listing_date": "2025年Q2",
+    "competitors": ["小米SU7", "特斯拉Model 3", "小鹏P7i"]
+  },
+  {
+    "id": "v_014",
+    "brand": "问界",
+    "model": "M7",
+    "full_name": "问界M7 中大型智慧SUV",
+    "category": "中大型增程SUV",
+    "price_range": "24.98-32.98万元",
+    "target_users": "30-50岁家庭用户，看重华为生态和智驾能力",
+    "powertrain": {
+      "type": "增程式电动",
+      "engine": "1.5T四缸增程器（仅发电）",
+      "battery_type": "三元锂",
+      "battery_capacity_kwh": 40,
+      "pure_electric_range_km": 240,
+      "combined_range_km": 1300,
+      "fuel_consumption_l_per_100km": 6.8,
+      "fast_charge": "100kW直流，30%-80%需30分钟"
+    },
+    "performance": {
+      "motor_power_kw": 330,
+      "torque_nm": 660,
+      "zero_to_hundred_seconds": 4.8,
+      "top_speed_kmh": 190,
+      "drive_type": "四驱"
+    },
+    "dimensions": {
+      "length_mm": 5020,
+      "width_mm": 1945,
+      "height_mm": 1760,
+      "wheelbase_mm": 2820,
+      "seats": 6,
+      "trunk_volume_l": 188
+    },
+    "smart_driving": {
+      "level": "L2+",
+      "chip": "华为MDC 610",
+      "lidar": true,
+      "lidar_count": 1,
+      "highway_noa": true,
+      "city_noa": true,
+      "auto_parking": true
+    },
+    "interior": {
+      "screen_size_inch": 15.6,
+      "screen_rotation": false,
+      "hud": true,
+      "sound_system": "HUAWEI SOUND 19扬声器",
+      "seat_material": "Nappa真皮",
+      "seat_heating": true,
+      "seat_ventilation": true,
+      "ambient_light": "128色"
+    },
+    "key_features": ["华为ADS 2.0", "鸿蒙座舱", "零重力座椅", "华为SOUND", "超级桌面"],
+    "warranty": "整车4年/10万公里，三电8年/16万公里",
+    "listing_date": "2025年Q1",
+    "competitors": ["理想L6", "蔚来ES6", "小鹏G9"]
+  },
+  {
+    "id": "v_015",
+    "brand": "比亚迪",
+    "model": "宋L",
+    "full_name": "比亚迪宋L 中型猎装SUV",
+    "category": "中型纯电SUV",
+    "price_range": "18.98-24.98万元",
+    "target_users": "25-35岁年轻家庭，追求个性和性价比",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂刀片电池",
+      "battery_capacity_kwh": 87,
+      "cltc_range_km": 662,
+      "wltp_range_km": 560,
+      "fast_charge": "800V，30%-80%需25分钟",
+      "slow_charge": "7kW交流，12小时充满",
+      "energy_density_wh_per_kg": 265
+    },
+    "performance": {
+      "motor_power_kw": 230,
+      "torque_nm": 360,
+      "zero_to_hundred_seconds": 6.8,
+      "top_speed_kmh": 200,
+      "drive_type": "后驱/四驱"
+    },
+    "dimensions": {
+      "length_mm": 4840,
+      "width_mm": 1950,
+      "height_mm": 1560,
+      "wheelbase_mm": 2930,
+      "seats": 5,
+      "trunk_volume_l": 520
+    },
+    "smart_driving": {
+      "level": "L2",
+      "chip": "DiPilot 100",
+      "lidar": false,
+      "highway_noa": true,
+      "city_noa": false,
+      "auto_parking": false
+    },
+    "interior": {
+      "screen_size_inch": 15.6,
+      "screen_rotation": true,
+      "hud": false,
+      "sound_system": "丹拿8扬声器",
+      "seat_material": "仿皮",
+      "seat_heating": true,
+      "seat_ventilation": false,
+      "ambient_light": "64色"
+    },
+    "key_features": ["猎装SUV造型", "e平台3.0", "CTB一体化", "刀片电池", "20万级662km续航"],
+    "warranty": "整车6年/15万公里，三电终身质保（首任车主）",
+    "listing_date": "2025年Q2",
+    "competitors": ["小鹏G6", "特斯拉Model Y", "零跑C11"]
+  },
+  {
+    "id": "v_016",
+    "brand": "吉利",
+    "model": "银河E8",
+    "full_name": "吉利银河E8 中大型纯电轿车",
+    "category": "中大型纯电轿车",
+    "price_range": "17.58-22.88万元",
+    "target_users": "25-35岁性价比导向用户，需要大空间轿车",
+    "powertrain": {
+      "type": "纯电动",
+      "battery_type": "磷酸铁锂",
+      "battery_capacity_kwh": 76,
+      "cltc_range_km": 665,
+      "wltp_range_km": 560,
+      "fast_charge": "400V，30%-80%需28分钟",
+      "slow_charge": "7kW交流，10小时充满",
+      "energy_density_wh_per_kg": 250
+    },
+    "performance": {
+      "motor_power_kw": 200,
+      "torque_nm": 343,
+      "zero_to_hundred_seconds": 6.5,
+      "top_speed_kmh": 190,
+      "drive_type": "后驱"
+    },
+    "dimensions": {
+      "length_mm": 5010,
+      "width_mm": 1920,
+      "height_mm": 1465,
+      "wheelbase_mm": 2925,
+      "seats": 5,
+      "trunk_volume_l": 465
+    },
+    "smart_driving": {
+      "level": "L2",
+      "chip": "Mobileye EyeQ5",
+      "lidar": false,
+      "highway_noa": false,
+      "city_noa": false,
+      "auto_parking": false
+    },
+    "interior": {
+      "screen_size_inch": 45,
+      "screen_rotation": false,
+      "hud": false,
+      "sound_system": "Infinity 12扬声器",
+      "seat_material": "仿皮",
+      "seat_heating": true,
+      "seat_ventilation": false,
+      "ambient_light": "64色"
+    },
+    "key_features": ["45英寸8K大屏", "5米车长", "17万起", "SEA架构", "龙鹰一号芯片"],
+    "warranty": "整车4年/10万公里，三电8年/15万公里",
+    "listing_date": "2025年Q1",
+    "competitors": ["比亚迪汉L", "零跑C01", "长安启源A07"]
+  }
+]
