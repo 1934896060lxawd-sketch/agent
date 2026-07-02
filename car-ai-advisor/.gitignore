@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Environment
+.env
+*.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# Knowledge base processed data
+knowledge_base/processed/*.index
+knowledge_base/processed/*.pkl
+knowledge_base/processed/*.npy
+
+# Models
+models/
+
+# Redis
+dump.rdb
+
+# Docker
+.docker/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/

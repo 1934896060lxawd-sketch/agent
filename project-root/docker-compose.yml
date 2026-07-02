@@ -1,0 +1,111 @@
+version: "3.9"
+
+services:
+  backend:
+    build: .
+    ports:
+      - "${APP_PORT}:8000"
+    env_file:
+      - .env
+    networks:
+      - app-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-}
+    volumes:
+      - redis-data:/data
+    networks:
+      - app-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # ============================================================
+  # （可选）Milvus 向量数据库 — 用于 RAG 语义检索
+  # 如需启用，取消下面三段的注释，并执行：
+  #   docker-compose --profile milvus up -d
+  # ============================================================
+  # etcd:
+  #   image: quay.io/coreos/etcd:v3.5.5
+  #   profiles: ["milvus"]
+  #   environment:
+  #     - ETCD_AUTO_COMPACTION_MODE=revision
+  #     - ETCD_AUTO_COMPACTION_RETENTION=1000
+  #     - ETCD_QUOTA_BACKEND_BYTES=4294967296
+  #     - ETCD_SNAPSHOT_COUNT=50000
+  #   volumes:
+  #     - etcd-data:/etcd
+  #   command: etcd -advertise-client-urls=http://etcd:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+  #   networks:
+  #     - app-net
+  #   healthcheck:
+  #     test: ["CMD", "etcdctl", "endpoint", "health"]
+  #     interval: 30s
+  #     timeout: 20s
+  #     retries: 3
+  #
+  # minio:
+  #   image: minio/minio:RELEASE.2024-01-16T16-07-38Z
+  #   profiles: ["milvus"]
+  #   environment:
+  #     MINIO_ACCESS_KEY: minioadmin
+  #     MINIO_SECRET_KEY: minioadmin
+  #   volumes:
+  #     - minio-data:/minio_data
+  #   command: minio server /minio_data --console-address ":9001"
+  #   networks:
+  #     - app-net
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+  #     interval: 30s
+  #     timeout: 20s
+  #     retries: 3
+  #
+  # milvus:
+  #   image: milvusdb/milvus:v2.4.0
+  #   profiles: ["milvus"]
+  #   command: ["milvus", "run", "standalone"]
+  #   security_opt:
+  #     - seccomp:unconfined
+  #   environment:
+  #     ETCD_ENDPOINTS: etcd:2379
+  #     MINIO_ADDRESS: minio:9000
+  #     MINIO_ACCESS_KEY_ID: minioadmin
+  #     MINIO_SECRET_ACCESS_KEY: minioadmin
+  #   volumes:
+  #     - milvus-data:/var/lib/milvus
+  #   ports:
+  #     - "19530:19530"
+  #     - "9091:9091"
+  #   networks:
+  #     - app-net
+  #   depends_on:
+  #     etcd:
+  #       condition: service_healthy
+  #     minio:
+  #       condition: service_healthy
+  #   restart: unless-stopped
+
+networks:
+  app-net:
+    driver: bridge
+
+volumes:
+  redis-data:
+  # etcd-data:
+  # minio-data:
+  # milvus-data:
