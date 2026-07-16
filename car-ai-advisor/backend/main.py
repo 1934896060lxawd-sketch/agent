@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 from backend.config import settings
+from backend.api.routes import chat, sessions
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -94,3 +95,10 @@ async def health_check(request: Request):
         "status": "running",
         "redis_alive": redis_alive,
     }
+
+
+# ============================================================
+# 注册业务路由
+# ============================================================
+app.include_router(chat.router)
+app.include_router(sessions.router)
