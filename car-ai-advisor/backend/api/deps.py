@@ -1,16 +1,29 @@
-"""FastAPI 依赖注入 — 组装认证、限流、会话管理为可注入依赖。
+"""FastAPI 依赖注入 — 组装认证、限流、会话管理、Agent 为可注入依赖。
 
-依赖链（外层先执行）:
+依赖链:
   get_redis_client → get_rate_limiter / get_session_manager
   check_rate_limit = get_current_user_auto (认证) + is_allowed (限流)
+  get_agent = 知识库索引加载 + ToolExecutor + CarAdvisorAgent (单例)
 """
+
+import logging
+import pickle
+from pathlib import Path
 
 from fastapi import Depends, HTTPException, Request
 from redis.asyncio import Redis
 
+from backend.config import settings
 from backend.core.security import get_current_user_auto
 from backend.core.session_manager import SessionManager
 from backend.core.resilience import SlidingWindowRateLimiter
+from backend.agent.tools import ToolExecutor
+from backend.agent.advisor import CarAdvisorAgent
+
+logger = logging.getLogger(__name__)
+
+# Agent 单例
+_agent: "CarAdvisorAgent | None" = None
 
 
 async def get_redis_client(request: Request) -> Redis:
@@ -39,9 +52,44 @@ async def check_rate_limit(
     user_id: str = Depends(get_current_user_auto),
     rate_limiter: SlidingWindowRateLimiter = Depends(get_rate_limiter),
 ) -> str:
-    """认证 + 限流组合检查。先认证（401）再限流（429），
-    未认证请求不消耗限流配额。返回 user_id 供路由使用。"""
+    """认证 + 限流组合检查。先认证（401）再限流（429）。"""
     allowed = await rate_limiter.is_allowed(user_id)
     if not allowed:
         raise HTTPException(status_code=429, detail="请求过于频繁，请稍后重试")
     return user_id
+
+
+async def get_agent() -> CarAdvisorAgent:
+    """获取 Agent 单例。首次调用时加载知识库索引。
+
+    需要先运行 build_index.py 构建索引文件：
+      python knowledge_base/scripts/build_index.py
+    """
+    global _agent
+    if _agent is not None:
+        return _agent
+
+    import faiss
+    from backend.rag.retriever import VectorIndex, BM25
+
+    project_root = Path(__file__).resolve().parent.parent.parent
+    processed_dir = project_root / settings.knowledge_base_dir / "processed"
+    index_path = str(processed_dir / "faiss_index.bin")
+    docs_path = str(processed_dir / "documents.pkl")
+
+    if not Path(index_path).exists() or not Path(docs_path).exists():
+        raise HTTPException(
+            status_code=503,
+            detail="知识库索引未构建，请先运行: python knowledge_base/scripts/build_index.py",
+        )
+
+    logger.info("加载知识库索引...")
+    vector_index = VectorIndex.load(index_path, docs_path)
+    bm25 = BM25(vector_index.documents)
+
+    executor = ToolExecutor()
+    executor.set_retrievers(vector_index, bm25)
+
+    _agent = CarAdvisorAgent(executor)
+    logger.info("Agent 就绪")
+    return _agent

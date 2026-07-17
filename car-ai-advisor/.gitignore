@@ -19,6 +19,7 @@ venv/
 knowledge_base/processed/*.index
 knowledge_base/processed/*.pkl
 knowledge_base/processed/*.npy
+knowledge_base/processed/*.bin
 
 # Models
 models/
