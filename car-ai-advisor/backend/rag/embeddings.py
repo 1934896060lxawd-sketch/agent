@@ -34,13 +34,13 @@ def get_embedding_model() -> SentenceTransformer:
 
     if local_path.is_dir() and (local_path / "pytorch_model.bin").exists():
         logger.info(f"从本地加载嵌入模型: {local_path}")
-        _embed_model = SentenceTransformer(str(local_path))
+        _embed_model = SentenceTransformer(str(local_path), local_files_only=True)
     else:
         logger.info(f"从 HuggingFace 加载嵌入模型: {model_name}")
         os.environ.setdefault("HF_ENDPOINT", "https://hf-mirror.com")
         _embed_model = SentenceTransformer(model_name)
 
-    dim = _embed_model.get_sentence_embedding_dimension()
+    dim = _embed_model.get_embedding_dimension()
     logger.info(f"嵌入模型就绪，向量维度: {dim}")
     return _embed_model
 

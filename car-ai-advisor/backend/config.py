@@ -44,7 +44,7 @@ class Settings(BaseSettings):
     # Session
     # ============================================================
     session_ttl_seconds: int = 1800
-    max_concurrent_per_user: int = 3
+    max_concurrent_per_user: int = 10  # 开发环境放宽，生产改回3
 
     # ============================================================
     # RAG (检索增强生成)

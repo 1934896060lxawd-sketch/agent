@@ -16,6 +16,7 @@ import time
 from typing import Awaitable, Callable, Optional, TypeVar
 
 import redis.asyncio as redis
+from redis import exceptions as redis_exceptions
 from backend.config import settings
 
 # 全局日志对象
@@ -114,7 +115,7 @@ class SlidingWindowRateLimiter:
             )
             # Lua返回1放行，0限流
             return result == 1
-        except redis.exceptions.NoScriptError:
+        except redis_exceptions.NoScriptError:
             # 异常场景：Redis重启/执行SCRIPT FLUSH，本地缓存的SHA失效
             # 清空本地sha缓存，重新上传脚本后重试一次
             self._script_sha = None
@@ -126,6 +127,11 @@ class SlidingWindowRateLimiter:
         except redis.RedisError as exc:
             # Redis服务宕机/网络故障降级策略：临时放行，优先保障业务可用性
             logger.critical(f"限流器 Redis 异常，临时放行: {exc}")
+            return True
+        except Exception as exc:
+            # fakeredis 等替代实现不支持 Lua 脚本（SCRIPT LOAD/EVALSHA）
+            # 或其它未知异常，一律临时放行，保障业务可用性优先
+            logger.critical(f"限流器异常(降级放行): {type(exc).__name__}: {exc}")
             return True
 
     async def get_remaining(self, identifier: str) -> int:

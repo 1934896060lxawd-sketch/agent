@@ -1,18 +1,25 @@
 import logging
+import sys
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 import redis.asyncio as redis
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-import sys
-from pathlib import Path
+# 修复 Windows GBK 终端下 emoji 等 Unicode 字符导致的 UnicodeEncodeError
+# Python 默认用系统编码 (Windows: gbk) 写 stdout/stderr，HTTP 响应走 UTF-8 不受影响
+if sys.platform == "win32":
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+
 sys.path.append(str(Path(__file__).parent.parent))
 from backend.config import settings
 from backend.api.routes import chat, sessions
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 logger = logging.getLogger(__name__)
 
 
@@ -32,8 +39,10 @@ async def lifespan(app: FastAPI):
         await app.state.redis.ping()
         logger.info("Redis 连接成功")
     except Exception as e:
-        logger.error(f"Redis 连接失败: {e}")
-        app.state.redis = None
+        logger.warning(f"Redis 连接失败 ({e})，降级为 fakeredis 内存模式")
+        import fakeredis.aioredis
+        app.state.redis = fakeredis.aioredis.FakeRedis(decode_responses=True)
+        logger.info("fakeredis 就绪（数据不持久化）")
 
     yield
 

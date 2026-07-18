@@ -4,6 +4,7 @@
 未安装模型时自动降级为跳过精排，不影响核心功能。
 """
 
+import concurrent.futures
 import logging
 import os
 from pathlib import Path
@@ -38,7 +39,20 @@ def get_reranker() -> "CrossEncoder | None":
     try:
         os.environ.setdefault("HF_ENDPOINT", "https://hf-mirror.com")
         logger.info(f"从 HuggingFace 加载精排模型: {model_name}")
-        _reranker_model = CrossEncoder(model_name)
+
+        # 线程超时下载：ThreadPoolExecutor 的 __exit__ 会 wait=True 等待线程完成，
+        # 必须 shutdown(wait=False) 才能真正在超时后抛弃后台线程继续执行
+        def _load():
+            return CrossEncoder(model_name)
+        pool = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+        future = pool.submit(_load)
+        try:
+            _reranker_model = future.result(timeout=3.0)
+        except concurrent.futures.TimeoutError:
+            logger.warning("精排模型下载超时(>3s)，跳过精排。后续请求将不再重试。")
+            _reranker_model = None
+        pool.shutdown(wait=False)
+
     except Exception as e:
         logger.warning(f"精排模型加载失败: {e}。精排步骤将自动跳过。")
         _reranker_model = None

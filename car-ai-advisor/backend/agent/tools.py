@@ -1,14 +1,21 @@
 """Agent 工具集 — 5 个 @tool 函数，供 ReAct Agent 调用。
 
 工具注册方式: OpenAI function-calling 格式的 JSON Schema。
-执行器: TOOL_EXECUTORS dict 映射工具名 → 异步执行函数。
+执行器: ToolExecutor 通过 getattr 反射将工具名分发到 _tool_xxx 方法。
 """
+
+from __future__ import annotations
 
 import json
 import logging
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 from backend.rag.chunker import Document
+from backend.rag.retriever import hybrid_rrf
+from backend.rag.reranker import rerank
+
+if TYPE_CHECKING:
+    from backend.rag.retriever import VectorIndex, BM25
 
 logger = logging.getLogger(__name__)
 
@@ -78,14 +85,15 @@ TOOL_SCHEMAS: list[dict[str, Any]] = [
         "type": "function",
         "function": {
             "name": "get_car_price",
-            "description": "查询指定车型的最新市场指导价。当用户询问价格、预算、多少钱、贵不贵时调用此工具。",
+            "description": "查询指定车型的最新市场指导价。参数 brand(品牌)+model(车型) 或直接用 model_name(全名)。当用户询问价格、预算、多少钱时调用。",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "brand": {"type": "string", "description": "品牌，如'比亚迪'、'特斯拉'"},
                     "model": {"type": "string", "description": "车型名，如'海豚'、'Model Y'"},
+                    "model_name": {"type": "string", "description": "车型全名，如'比亚迪 海豚'、'特斯拉 Model Y'（与brand+model二选一）"},
                 },
-                "required": ["brand", "model"],
+                "required": [],
             },
         },
     },
@@ -152,18 +160,19 @@ TOOL_SCHEMAS: list[dict[str, Any]] = [
 # 工具执行器（由 Advisor 注入 retriever/reranker 后调用）
 # ============================================================
 class ToolExecutor:
-    """工具执行器 — 持有检索器和模型引用，执行工具调用。"""
+    """工具执行器 — 持有检索器引用，通过 getattr 反射分发工具调用。"""
 
     def __init__(self):
-        self.retriever: "VectorIndex | None" = None
-        self.bm25: "BM25 | None" = None
+        self.retriever: VectorIndex | None = None
+        self.bm25: BM25 | None = None
 
-    def set_retrievers(self, retriever: "VectorIndex", bm25: "BM25") -> None:
+    def set_retrievers(self, retriever: VectorIndex, bm25: BM25) -> None:
+        """注入检索器实例（由 get_agent() 在启动时调用）。"""
         self.retriever = retriever
         self.bm25 = bm25
 
     async def execute(self, name: str, arguments: dict[str, Any]) -> str:
-        """根据工具名分发执行。"""
+        """根据工具名反射分发到 _tool_xxx 方法。"""
         method = getattr(self, f"_tool_{name}", None)
         if method is None:
             return json.dumps({"error": f"未知工具: {name}"}, ensure_ascii=False)
@@ -176,17 +185,17 @@ class ToolExecutor:
             logger.error(f"工具执行失败 {name}({arguments}): {e}")
             return json.dumps({"error": str(e)}, ensure_ascii=False)
 
-    def _tool_search_car_knowledge(self, query: str) -> str:
+    # ── 知识库检索 ──
+    def _tool_search_car_knowledge(self, query: str = "", keyword: str = "") -> str:
+        """RAG 全管线。接受 query 或 keyword 参数（LLM 可能用任一名称调用）。"""
+        search_text = query or keyword or ""
         if self.retriever is None or self.bm25 is None:
             return json.dumps({"error": "知识库索引未就绪"}, ensure_ascii=False)
 
-        from backend.rag.retriever import hybrid_rrf
-        from backend.rag.reranker import rerank
-
-        dense = self.retriever.search(query, top_k=6)
-        sparse = self.bm25.search(query, top_k=6)
+        dense = self.retriever.search(search_text, top_k=6)
+        sparse = self.bm25.search(search_text, top_k=6)
         hybrid = hybrid_rrf(dense, sparse, k=60, top_k=5)
-        reranked = rerank(query, hybrid, top_k=3)
+        reranked = rerank(search_text, hybrid, top_k=3)
 
         results = []
         for i, (score, doc) in enumerate(reranked, 1):
@@ -199,18 +208,44 @@ class ToolExecutor:
             })
         return json.dumps({"results": results, "count": len(results)}, ensure_ascii=False)
 
+    # ── 车型价格查询 ──
     @staticmethod
-    def _tool_get_car_price(brand: str, model: str) -> str:
-        key = f"{brand} {model}"
+    def _tool_get_car_price(brand: str = "", model: str = "",
+                            model_name: str = "") -> str:
+        """接受两种参数格式：brand+model 或 model_name 全名。"""
+        # model_name 优先：按已知品牌拆分匹配
+        if model_name and not (brand and model):
+            if model_name in CAR_PRICE_DB:
+                return json.dumps({"car": model_name, "price": CAR_PRICE_DB[model_name],
+                                   "status": "found"}, ensure_ascii=False)
+            # 用 model_name 作为子串搜索
+            for k, v in CAR_PRICE_DB.items():
+                # "比亚迪宋L" vs "比亚迪 宋PLUS DM-i" → 比亚迪 和 宋 都匹配
+                if model_name.replace(" ", "") in k.replace(" ", "") or \
+                   any(word in k for word in model_name.split() if len(word) >= 2):
+                    return json.dumps({"car": k, "price": v, "status": "found"},
+                                      ensure_ascii=False)
+            # 反向：DB key 是 model_name 的子串
+            for k, v in CAR_PRICE_DB.items():
+                if k.replace(" ", "") in model_name.replace(" ", ""):
+                    return json.dumps({"car": k, "price": v, "status": "found"},
+                                      ensure_ascii=False)
+
+        key = f"{brand} {model}".strip()
         if key in CAR_PRICE_DB:
             return json.dumps({"car": key, "price": CAR_PRICE_DB[key], "status": "found"},
                               ensure_ascii=False)
-        for k, v in CAR_PRICE_DB.items():
-            if brand in k and model in k:
-                return json.dumps({"car": k, "price": v, "status": "found"}, ensure_ascii=False)
-        return json.dumps({"car": key, "price": None, "status": "not_found",
-                           "message": f"未找到 {key} 的价格信息"}, ensure_ascii=False)
 
+        # 模糊匹配：品牌和车型名各自至少 2 个字符
+        if (brand and len(brand) >= 2) or (model and len(model) >= 2):
+            for k, v in CAR_PRICE_DB.items():
+                if (not brand or brand in k) and (not model or model in k):
+                    return json.dumps({"car": k, "price": v, "status": "found"}, ensure_ascii=False)
+
+        return json.dumps({"car": key or model_name, "price": None, "status": "not_found",
+                           "message": f"未找到价格信息"}, ensure_ascii=False)
+
+    # ── 车型对比 ──
     @staticmethod
     def _tool_compare_cars(car1: str, car2: str) -> str:
         return json.dumps({
@@ -220,6 +255,7 @@ class ToolExecutor:
                      "spec": CAR_SPEC_BRIEF.get(car2, "暂无参数")},
         }, ensure_ascii=False)
 
+    # ── 车型推荐 ──
     @staticmethod
     def _tool_recommend_cars(budget_min: float, budget_max: float,
                              category: str = "全部", preferred_brand: str = "") -> str:
@@ -240,6 +276,7 @@ class ToolExecutor:
         results.sort(key=lambda x: float(x["price"].split("-")[0]))
         return json.dumps({"count": len(results), "cars": results}, ensure_ascii=False)
 
+    # ── 用车成本计算 ──
     @staticmethod
     def _tool_calculate_ownership_cost(model: str, years: int = 3) -> str:
         price_str = CAR_PRICE_DB.get(model)
@@ -247,13 +284,15 @@ class ToolExecutor:
             return json.dumps({"error": f"未找到 {model} 的价格"}, ensure_ascii=False)
         parts = price_str.replace(" 万", "").split("-")
         mid_price = (float(parts[0]) + float(parts[-1])) / 2
-        insurance = round(mid_price * 0.03, 2)
-        maintenance = round(mid_price * 0.01, 2)
-        energy = round(0.3 * 20000 / 10000, 2)  # 电费 0.3元/km，年2万km
+        insurance = round(mid_price * 0.03, 2)    # 年均保险 ≈ 车价 × 3%
+        maintenance = round(mid_price * 0.01, 2)  # 年均保养 ≈ 车价 × 1%
+        energy = round(0.3 * 20000 / 10000, 2)    # 电费 0.3 元/km × 年 2 万 km → 万元
         annual = round(insurance + maintenance + energy, 2)
         total = round(mid_price + annual * years, 2)
         return json.dumps({
-            "model": model, "mid_price_wan": round(mid_price, 2),
+            "model": model,
+            "mid_price_wan": round(mid_price, 2),
             "annual_cost_wan": annual,
-            f"total_{years}y_cost_wan": total,
+            "years": years,
+            "total_cost_wan": total,
         }, ensure_ascii=False)
