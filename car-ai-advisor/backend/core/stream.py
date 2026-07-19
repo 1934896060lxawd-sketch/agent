@@ -82,10 +82,11 @@ async def sse_generator(
     except Exception as exc:
         # 生成器内部异常 → 发送 error 事件，不抛给 FastAPI
         # 这样客户端至少能收到已生成的内容 + 错误信息
+        # 注意：错误消息不包含原始异常详情（防止 XML/内部信息泄露）
         logger.error(f"SSE 流异常 (已生成 {generated_count} 个事件): {exc}")
         error_event = {
             "type": "error",
-            "message": str(exc),
+            "message": "服务暂时不可用，请稍后重试",
             "generated_tokens": generated_count,
         }
         yield format_sse(error_event)
