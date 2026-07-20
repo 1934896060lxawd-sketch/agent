@@ -1,0 +1,814 @@
+data: {"type": "token", "content": "好"}
+data: {"type": "token", "content": "的"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "关"}
+data: {"type": "token", "content": "于"}
+data: {"type": "token", "content": "比"}
+data: {"type": "token", "content": "亚"}
+data: {"type": "token", "content": "迪"}
+data: {"type": "token", "content": "海"}
+data: {"type": "token", "content": "豚"}
+data: {"type": "token", "content": "的"}
+data: {"type": "token", "content": "详"}
+data: {"type": "token", "content": "细"}
+data: {"type": "token", "content": "参"}
+data: {"type": "token", "content": "数"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "结"}
+data: {"type": "token", "content": "合"}
+data: {"type": "token", "content": "我"}
+data: {"type": "token", "content": "的"}
+data: {"type": "token", "content": "知"}
+data: {"type": "token", "content": "识"}
+data: {"type": "token", "content": "库"}
+data: {"type": "token", "content": "和"}
+data: {"type": "token", "content": "价"}
+data: {"type": "token", "content": "格"}
+data: {"type": "token", "content": "数"}
+data: {"type": "token", "content": "据"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "给"}
+data: {"type": "token", "content": "你"}
+data: {"type": "token", "content": "全"}
+data: {"type": "token", "content": "面"}
+data: {"type": "token", "content": "介"}
+data: {"type": "token", "content": "绍"}
+data: {"type": "token", "content": "一"}
+data: {"type": "token", "content": "下"}
+data: {"type": "token", "content": "👇"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "🐬"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "比"}
+data: {"type": "token", "content": "亚"}
+data: {"type": "token", "content": "迪"}
+data: {"type": "token", "content": "海"}
+data: {"type": "token", "content": "豚"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "全"}
+data: {"type": "token", "content": "面"}
+data: {"type": "token", "content": "解"}
+data: {"type": "token", "content": "析"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "💰"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "价"}
+data: {"type": "token", "content": "格"}
+data: {"type": "token", "content": "区"}
+data: {"type": "token", "content": "间"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "9"}
+data: {"type": "token", "content": "."}
+data: {"type": "token", "content": "9"}
+data: {"type": "token", "content": "8"}
+data: {"type": "token", "content": "万"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "3"}
+data: {"type": "token", "content": "."}
+data: {"type": "token", "content": "9"}
+data: {"type": "token", "content": "8"}
+data: {"type": "token", "content": "万"}
+data: {"type": "token", "content": "元"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "目"}
+data: {"type": "token", "content": "前"}
+data: {"type": "token", "content": "在"}
+data: {"type": "token", "content": "售"}
+data: {"type": "token", "content": "有"}
+data: {"type": "token", "content": "活"}
+data: {"type": "token", "content": "力"}
+data: {"type": "token", "content": "版"}
+data: {"type": "token", "content": "、"}
+data: {"type": "token", "content": "自"}
+data: {"type": "token", "content": "由"}
+data: {"type": "token", "content": "版"}
+data: {"type": "token", "content": "、"}
+data: {"type": "token", "content": "时"}
+data: {"type": "token", "content": "尚"}
+data: {"type": "token", "content": "版"}
+data: {"type": "token", "content": "、"}
+data: {"type": "token", "content": "骑"}
+data: {"type": "token", "content": "士"}
+data: {"type": "token", "content": "版"}
+data: {"type": "token", "content": "等"}
+data: {"type": "token", "content": "配"}
+data: {"type": "token", "content": "置"}
+data: {"type": "token", "content": "。"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "🚗"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "核"}
+data: {"type": "token", "content": "心"}
+data: {"type": "token", "content": "参"}
+data: {"type": "token", "content": "数"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "项"}
+data: {"type": "token", "content": "目"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "参"}
+data: {"type": "token", "content": "数"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "车"}
+data: {"type": "token", "content": "型"}
+data: {"type": "token", "content": "定"}
+data: {"type": "token", "content": "位"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "小"}
+data: {"type": "token", "content": "型"}
+data: {"type": "token", "content": "纯"}
+data: {"type": "token", "content": "电"}
+data: {"type": "token", "content": "两"}
+data: {"type": "token", "content": "厢"}
+data: {"type": "token", "content": "车"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "续"}
+data: {"type": "token", "content": "航"}
+data: {"type": "token", "content": "（"}
+data: {"type": "token", "content": "C"}
+data: {"type": "token", "content": "L"}
+data: {"type": "token", "content": "T"}
+data: {"type": "token", "content": "C"}
+data: {"type": "token", "content": "）"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "3"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "k"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "/"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "4"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "k"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "/"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "4"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "k"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": "（"}
+data: {"type": "token", "content": "骑"}
+data: {"type": "token", "content": "士"}
+data: {"type": "token", "content": "版"}
+data: {"type": "token", "content": "）"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "电"}
+data: {"type": "token", "content": "池"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "磷"}
+data: {"type": "token", "content": "酸"}
+data: {"type": "token", "content": "铁"}
+data: {"type": "token", "content": "锂"}
+data: {"type": "token", "content": "刀"}
+data: {"type": "token", "content": "片"}
+data: {"type": "token", "content": "电"}
+data: {"type": "token", "content": "池"}
+data: {"type": "token", "content": "（"}
+data: {"type": "token", "content": "安"}
+data: {"type": "token", "content": "全"}
+data: {"type": "token", "content": "天"}
+data: {"type": "token", "content": "花"}
+data: {"type": "token", "content": "板"}
+data: {"type": "token", "content": "）"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "电"}
+data: {"type": "token", "content": "机"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "7"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "k"}
+data: {"type": "token", "content": "W"}
+data: {"type": "token", "content": "（"}
+data: {"type": "token", "content": "普"}
+data: {"type": "token", "content": "通"}
+data: {"type": "token", "content": "版"}
+data: {"type": "token", "content": "）"}
+data: {"type": "token", "content": "/"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "3"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "k"}
+data: {"type": "token", "content": "W"}
+data: {"type": "token", "content": "（"}
+data: {"type": "token", "content": "骑"}
+data: {"type": "token", "content": "士"}
+data: {"type": "token", "content": "版"}
+data: {"type": "token", "content": "）"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "5"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "k"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": "/"}
+data: {"type": "token", "content": "h"}
+data: {"type": "token", "content": "加"}
+data: {"type": "token", "content": "速"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "约"}
+data: {"type": "token", "content": "3"}
+data: {"type": "token", "content": "."}
+data: {"type": "token", "content": "9"}
+data: {"type": "token", "content": "秒"}
+data: {"type": "token", "content": "（"}
+data: {"type": "token", "content": "城"}
+data: {"type": "token", "content": "市"}
+data: {"type": "token", "content": "代"}
+data: {"type": "token", "content": "步"}
+data: {"type": "token", "content": "绰"}
+data: {"type": "token", "content": "绰"}
+data: {"type": "token", "content": "有"}
+data: {"type": "token", "content": "余"}
+data: {"type": "token", "content": "）"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "尺"}
+data: {"type": "token", "content": "寸"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "长"}
+data: {"type": "token", "content": "4"}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "2"}
+data: {"type": "token", "content": "5"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "/"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "宽"}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "7"}
+data: {"type": "token", "content": "7"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "/"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "高"}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "5"}
+data: {"type": "token", "content": "7"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "轴"}
+data: {"type": "token", "content": "距"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "2"}
+data: {"type": "token", "content": "7"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "（"}
+data: {"type": "token", "content": "同"}
+data: {"type": "token", "content": "级"}
+data: {"type": "token", "content": "最"}
+data: {"type": "token", "content": "长"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "后"}
+data: {"type": "token", "content": "排"}
+data: {"type": "token", "content": "不"}
+data: {"type": "token", "content": "憋"}
+data: {"type": "token", "content": "屈"}
+data: {"type": "token", "content": "）"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "智"}
+data: {"type": "token", "content": "能"}
+data: {"type": "token", "content": "驾"}
+data: {"type": "token", "content": "驶"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "L"}
+data: {"type": "token", "content": "2"}
+data: {"type": "token", "content": "级"}
+data: {"type": "token", "content": "辅"}
+data: {"type": "token", "content": "助"}
+data: {"type": "token", "content": "驾"}
+data: {"type": "token", "content": "驶"}
+data: {"type": "token", "content": "（"}
+data: {"type": "token", "content": "高"}
+data: {"type": "token", "content": "配"}
+data: {"type": "token", "content": "有"}
+data: {"type": "token", "content": "A"}
+data: {"type": "token", "content": "C"}
+data: {"type": "token", "content": "C"}
+data: {"type": "token", "content": "+"}
+data: {"type": "token", "content": "车"}
+data: {"type": "token", "content": "道"}
+data: {"type": "token", "content": "保"}
+data: {"type": "token", "content": "持"}
+data: {"type": "token", "content": "）"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "热"}
+data: {"type": "token", "content": "泵"}
+data: {"type": "token", "content": "空"}
+data: {"type": "token", "content": "调"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "全"}
+data: {"type": "token", "content": "系"}
+data: {"type": "token", "content": "标"}
+data: {"type": "token", "content": "配"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "（"}
+data: {"type": "token", "content": "冬"}
+data: {"type": "token", "content": "季"}
+data: {"type": "token", "content": "续"}
+data: {"type": "token", "content": "航"}
+data: {"type": "token", "content": "友"}
+data: {"type": "token", "content": "好"}
+data: {"type": "token", "content": "）"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "|"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "🌟"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "三"}
+data: {"type": "token", "content": "大"}
+data: {"type": "token", "content": "卖"}
+data: {"type": "token", "content": "点"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "️"}
+data: {"type": "token", "content": "⃣"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "刀"}
+data: {"type": "token", "content": "片"}
+data: {"type": "token", "content": "电"}
+data: {"type": "token", "content": "池"}
+data: {"type": "token", "content": "安"}
+data: {"type": "token", "content": "全"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "—"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "针"}
+data: {"type": "token", "content": "刺"}
+data: {"type": "token", "content": "不"}
+data: {"type": "token", "content": "起"}
+data: {"type": "token", "content": "火"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "同"}
+data: {"type": "token", "content": "级"}
+data: {"type": "token", "content": "别"}
+data: {"type": "token", "content": "最"}
+data: {"type": "token", "content": "安"}
+data: {"type": "token", "content": "心"}
+data: {"type": "token", "content": "的"}
+data: {"type": "token", "content": "电"}
+data: {"type": "token", "content": "池"}
+data: {"type": "token", "content": "选"}
+data: {"type": "token", "content": "择"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "2"}
+data: {"type": "token", "content": "️"}
+data: {"type": "token", "content": "⃣"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "轴"}
+data: {"type": "token", "content": "距"}
+data: {"type": "token", "content": "2"}
+data: {"type": "token", "content": "7"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "—"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "车"}
+data: {"type": "token", "content": "小"}
+data: {"type": "token", "content": "空"}
+data: {"type": "token", "content": "间"}
+data: {"type": "token", "content": "大"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "后"}
+data: {"type": "token", "content": "排"}
+data: {"type": "token", "content": "坐"}
+data: {"type": "token", "content": "成"}
+data: {"type": "token", "content": "年"}
+data: {"type": "token", "content": "人"}
+data: {"type": "token", "content": "没"}
+data: {"type": "token", "content": "问"}
+data: {"type": "token", "content": "题"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "城"}
+data: {"type": "token", "content": "市"}
+data: {"type": "token", "content": "好"}
+data: {"type": "token", "content": "停"}
+data: {"type": "token", "content": "车"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "3"}
+data: {"type": "token", "content": "️"}
+data: {"type": "token", "content": "⃣"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "热"}
+data: {"type": "token", "content": "泵"}
+data: {"type": "token", "content": "空"}
+data: {"type": "token", "content": "调"}
+data: {"type": "token", "content": "标"}
+data: {"type": "token", "content": "配"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "—"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "北"}
+data: {"type": "token", "content": "方"}
+data: {"type": "token", "content": "用"}
+data: {"type": "token", "content": "户"}
+data: {"type": "token", "content": "福"}
+data: {"type": "token", "content": "音"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "冬"}
+data: {"type": "token", "content": "天"}
+data: {"type": "token", "content": "续"}
+data: {"type": "token", "content": "航"}
+data: {"type": "token", "content": "比"}
+data: {"type": "token", "content": "同"}
+data: {"type": "token", "content": "级"}
+data: {"type": "token", "content": "多"}
+data: {"type": "token", "content": "扛"}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "5"}
+data: {"type": "token", "content": "%"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "2"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "%"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "⚠"}
+data: {"type": "token", "content": "️"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "需"}
+data: {"type": "token", "content": "要"}
+data: {"type": "token", "content": "注"}
+data: {"type": "token", "content": "意"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "智"}
+data: {"type": "token", "content": "驾"}
+data: {"type": "token", "content": "偏"}
+data: {"type": "token", "content": "基"}
+data: {"type": "token", "content": "础"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "只"}
+data: {"type": "token", "content": "有"}
+data: {"type": "token", "content": "L"}
+data: {"type": "token", "content": "2"}
+data: {"type": "token", "content": "级"}
+data: {"type": "token", "content": "别"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "没"}
+data: {"type": "token", "content": "有"}
+data: {"type": "token", "content": "城"}
+data: {"type": "token", "content": "市"}
+data: {"type": "token", "content": "N"}
+data: {"type": "token", "content": "O"}
+data: {"type": "token", "content": "A"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "骑"}
+data: {"type": "token", "content": "士"}
+data: {"type": "token", "content": "版"}
+data: {"type": "token", "content": "（"}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "3"}
+data: {"type": "token", "content": "."}
+data: {"type": "token", "content": "9"}
+data: {"type": "token", "content": "8"}
+data: {"type": "token", "content": "万"}
+data: {"type": "token", "content": "）"}
+data: {"type": "token", "content": "动"}
+data: {"type": "token", "content": "力"}
+data: {"type": "token", "content": "强"}
+data: {"type": "token", "content": "但"}
+data: {"type": "token", "content": "续"}
+data: {"type": "token", "content": "航"}
+data: {"type": "token", "content": "只"}
+data: {"type": "token", "content": "有"}
+data: {"type": "token", "content": "4"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "k"}
+data: {"type": "token", "content": "m"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "非"}
+data: {"type": "token", "content": "8"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "V"}
+data: {"type": "token", "content": "平"}
+data: {"type": "token", "content": "台"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "快"}
+data: {"type": "token", "content": "充"}
+data: {"type": "token", "content": "速"}
+data: {"type": "token", "content": "度"}
+data: {"type": "token", "content": "一"}
+data: {"type": "token", "content": "般"}
+data: {"type": "token", "content": "（"}
+data: {"type": "token", "content": "3"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "%"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "8"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "%"}
+data: {"type": "token", "content": "约"}
+data: {"type": "token", "content": "3"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "分"}
+data: {"type": "token", "content": "钟"}
+data: {"type": "token", "content": "）"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": "#"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "🎯"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "适"}
+data: {"type": "token", "content": "合"}
+data: {"type": "token", "content": "谁"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "城"}
+data: {"type": "token", "content": "市"}
+data: {"type": "token", "content": "通"}
+data: {"type": "token", "content": "勤"}
+data: {"type": "token", "content": "代"}
+data: {"type": "token", "content": "步"}
+data: {"type": "token", "content": "首"}
+data: {"type": "token", "content": "选"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "尤"}
+data: {"type": "token", "content": "其"}
+data: {"type": "token", "content": "适"}
+data: {"type": "token", "content": "合"}
+data: {"type": "token", "content": "："}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "家"}
+data: {"type": "token", "content": "里"}
+data: {"type": "token", "content": "已"}
+data: {"type": "token", "content": "有"}
+data: {"type": "token", "content": "一"}
+data: {"type": "token", "content": "辆"}
+data: {"type": "token", "content": "大"}
+data: {"type": "token", "content": "车"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "增"}
+data: {"type": "token", "content": "购"}
+data: {"type": "token", "content": "一"}
+data: {"type": "token", "content": "辆"}
+data: {"type": "token", "content": "市"}
+data: {"type": "token", "content": "区"}
+data: {"type": "token", "content": "代"}
+data: {"type": "token", "content": "步"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "新"}
+data: {"type": "token", "content": "手"}
+data: {"type": "token", "content": "第"}
+data: {"type": "token", "content": "一"}
+data: {"type": "token", "content": "辆"}
+data: {"type": "token", "content": "车"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "好"}
+data: {"type": "token", "content": "开"}
+data: {"type": "token", "content": "好"}
+data: {"type": "token", "content": "停"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "预"}
+data: {"type": "token", "content": "算"}
+data: {"type": "token", "content": "1"}
+data: {"type": "token", "content": "0"}
+data: {"type": "token", "content": "万"}
+data: {"type": "token", "content": "左"}
+data: {"type": "token", "content": "右"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "看"}
+data: {"type": "token", "content": "重"}
+data: {"type": "token", "content": "安"}
+data: {"type": "token", "content": "全"}
+data: {"type": "token", "content": "和"}
+data: {"type": "token", "content": "空"}
+data: {"type": "token", "content": "间"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "-"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "\n"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "要"}
+data: {"type": "token", "content": "不"}
+data: {"type": "token", "content": "要"}
+data: {"type": "token", "content": "顺"}
+data: {"type": "token", "content": "便"}
+data: {"type": "token", "content": "算"}
+data: {"type": "token", "content": "算"}
+data: {"type": "token", "content": "海"}
+data: {"type": "token", "content": "豚"}
+data: {"type": "token", "content": "的"}
+data: {"type": "token", "content": "落"}
+data: {"type": "token", "content": "地"}
+data: {"type": "token", "content": "价"}
+data: {"type": "token", "content": "和"}
+data: {"type": "token", "content": "每"}
+data: {"type": "token", "content": "年"}
+data: {"type": "token", "content": "养"}
+data: {"type": "token", "content": "车"}
+data: {"type": "token", "content": "成"}
+data: {"type": "token", "content": "本"}
+data: {"type": "token", "content": "？"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": "*"}
+data: {"type": "token", "content": " "}
+data: {"type": "token", "content": "或"}
+data: {"type": "token", "content": "者"}
+data: {"type": "token", "content": "你"}
+data: {"type": "token", "content": "想"}
+data: {"type": "token", "content": "跟"}
+data: {"type": "token", "content": "其"}
+data: {"type": "token", "content": "他"}
+data: {"type": "token", "content": "车"}
+data: {"type": "token", "content": "型"}
+data: {"type": "token", "content": "对"}
+data: {"type": "token", "content": "比"}
+data: {"type": "token", "content": "一"}
+data: {"type": "token", "content": "下"}
+data: {"type": "token", "content": "，"}
+data: {"type": "token", "content": "比"}
+data: {"type": "token", "content": "如"}
+data: {"type": "token", "content": "比"}
+data: {"type": "token", "content": "亚"}
+data: {"type": "token", "content": "迪"}
+data: {"type": "token", "content": "海"}
+data: {"type": "token", "content": "鸥"}
+data: {"type": "token", "content": "、"}
+data: {"type": "token", "content": "五"}
+data: {"type": "token", "content": "菱"}
+data: {"type": "token", "content": "缤"}
+data: {"type": "token", "content": "果"}
+data: {"type": "token", "content": "这"}
+data: {"type": "token", "content": "些"}
+data: {"type": "token", "content": "同"}
+data: {"type": "token", "content": "价"}
+data: {"type": "token", "content": "位"}
+data: {"type": "token", "content": "的"}
+data: {"type": "token", "content": "？"}
+data: {"type": "done", "total_tokens": 816}

@@ -218,6 +218,9 @@ def check_access() -> None:
             st.error("密码不正确，请重试")
             st.stop()
         st.session_state.access_granted = True
+        # 立即重跑：否则门禁组件（密码框）会在本次运行中残留显示在内容上方，
+        # 要等下一次交互才消失，访客会以为密码没通过
+        st.rerun()
 
     max_q = int(st.secrets.get("MAX_QUESTIONS_PER_SESSION", 0) or 0)
     if max_q > 0:
