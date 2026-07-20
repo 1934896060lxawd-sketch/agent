@@ -79,6 +79,37 @@ CAR_SPEC_BRIEF: dict[str, str] = {
     "吉利 银河E8": "中大型纯电轿车，CLTC续航 665km，零百加速 6.5s，400V快充",
 }
 
+# 车型类别映射（recommend_cars 的 category 过滤用）
+# 历史教训：车型名本身不含"SUV/轿车"字样，直接子串匹配会把所有车过滤光，
+# 导致"25万预算推荐SUV"返回 0 款、模型只能回答"没有符合要求的车型"。
+CAR_CATEGORY: dict[str, str] = {
+    "比亚迪 秦PLUS DM-i": "轿车",
+    "比亚迪 海豚": "轿车",
+    "比亚迪 海豹": "轿车",
+    "比亚迪 宋PLUS DM-i": "SUV",
+    "特斯拉 Model 3": "轿车",
+    "特斯拉 Model Y": "SUV",
+    "蔚来 ET5": "轿车",
+    "蔚来 ES6": "SUV",
+    "小鹏 G6": "SUV",
+    "小鹏 P7": "轿车",
+    "理想 L6": "SUV",
+    "理想 L7": "SUV",
+    "小米 SU7": "轿车",
+    "极氪 001": "轿车",
+    "问界 M7": "SUV",
+    "吉利 银河 L7": "SUV",
+    "比亚迪 宋L": "SUV",
+    "比亚迪 海豹08": "轿车",
+    "比亚迪 汉L": "轿车",
+    "比亚迪 海豹06 DM-i": "轿车",
+    "小鹏 P7i": "轿车",
+    "小鹏 G9": "SUV",
+    "理想 L9": "SUV",
+    "极氪 007": "轿车",
+    "吉利 银河E8": "轿车",
+}
+
 
 # ============================================================
 # 工具 Schema 定义（OpenAI function-calling 格式）
@@ -140,8 +171,8 @@ TOOL_SCHEMAS: list[dict[str, Any]] = [
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "budget_min": {"type": "number", "description": "预算下限（万元）"},
-                    "budget_max": {"type": "number", "description": "预算上限（万元）"},
+                    "budget_min": {"type": "number", "description": "预算下限（万元）。用户只给一个预算数时传 0"},
+                    "budget_max": {"type": "number", "description": "预算上限（万元）。如'25万预算'传 25"},
                     "category": {
                         "type": "string",
                         "description": "车型类别，如SUV/轿车/MPV，默认全部",
@@ -265,41 +296,100 @@ class ToolExecutor:
         return json.dumps({"car": key or model_name, "price": None, "status": "not_found",
                            "message": f"未找到价格信息"}, ensure_ascii=False)
 
+    # ── 车型名模糊解析 ──
+    @staticmethod
+    def _resolve_car_name(name: str) -> str | None:
+        """把模型传入的车型名（空格/大小写/简称差异）映射到 CAR_PRICE_DB 的 key。
+
+        历史教训：LLM 常传 "小米SU7"（无空格）而 DB key 是 "小米 SU7"，
+        精确 .get() 查不到 → 返回"暂无"→ 模型告诉用户"没有数据"（其实是有的）。
+        """
+        if not name:
+            return None
+        if name in CAR_PRICE_DB:
+            return name
+        norm = name.replace(" ", "").lower()
+        # 1) 去空格、忽略大小写后完全相等
+        for k in CAR_PRICE_DB:
+            if k.replace(" ", "").lower() == norm:
+                return k
+        # 2) 子串互相包含（如 "Model 3" → "特斯拉 Model 3"）
+        for k in CAR_PRICE_DB:
+            kk = k.replace(" ", "").lower()
+            if len(norm) >= 2 and (norm in kk or kk in norm):
+                return k
+        # 3) 分词全部命中（如 "小米 SU7" → 小米、SU7 都在 key 中）
+        words = [w for w in name.split() if len(w) >= 2]
+        if words:
+            for k in CAR_PRICE_DB:
+                if all(w in k for w in words):
+                    return k
+        return None
+
     # ── 车型对比 ──
     @staticmethod
     def _tool_compare_cars(car1: str, car2: str) -> str:
+        k1 = ToolExecutor._resolve_car_name(car1)
+        k2 = ToolExecutor._resolve_car_name(car2)
         return json.dumps({
-            "car1": {"name": car1, "price": CAR_PRICE_DB.get(car1, "暂无"),
-                     "spec": CAR_SPEC_BRIEF.get(car1, "暂无参数")},
-            "car2": {"name": car2, "price": CAR_PRICE_DB.get(car2, "暂无"),
-                     "spec": CAR_SPEC_BRIEF.get(car2, "暂无参数")},
+            "car1": {"name": k1 or car1,
+                     "price": CAR_PRICE_DB.get(k1 or "", "暂无"),
+                     "spec": CAR_SPEC_BRIEF.get(k1 or "", "暂无参数"),
+                     "matched": k1 is not None},
+            "car2": {"name": k2 or car2,
+                     "price": CAR_PRICE_DB.get(k2 or "", "暂无"),
+                     "spec": CAR_SPEC_BRIEF.get(k2 or "", "暂无参数"),
+                     "matched": k2 is not None},
         }, ensure_ascii=False)
 
     # ── 车型推荐 ──
     @staticmethod
     def _tool_recommend_cars(budget_min: float, budget_max: float,
                              category: str = "全部", preferred_brand: str = "") -> str:
+        # 健壮性①：用户只给一个预算数（"25万预算"）时，模型常传 min==max，
+        # 精确区间几乎不可能命中任何车。按"预算上限"理解，下限放宽到 0。
+        if budget_min >= budget_max:
+            budget_min, budget_max = 0.0, max(budget_min, budget_max)
+
+        # 健壮性②：类别归一化，方言/大小写/近义词都映射到标准类别
+        cat = category.strip() if category else "全部"
+        if any(k in cat for k in ("SUV", "suv", "越野")):
+            cat = "SUV"
+        elif any(k in cat for k in ("轿", "三厢", "两厢")):
+            cat = "轿车"
+        elif any(k in cat for k in ("MPV", "mpv", "商务")):
+            cat = "MPV"
+        else:
+            cat = "全部"
+
         results = []
         for name, price_str in CAR_PRICE_DB.items():
             try:
-                low_price = float(price_str.replace(" 万", "").split("-")[0])
-            except ValueError:
+                parts = price_str.replace(" 万", "").split("-")
+                low_price = float(parts[0])
+                high_price = float(parts[-1])
+            except (ValueError, IndexError):
                 continue
-            if not (budget_min <= low_price <= budget_max):
+            # 价格区间与预算区间有重叠即视为预算内
+            # （起步价不超预算上限，顶配不低于预算下限）
+            if low_price > budget_max or high_price < budget_min:
                 continue
-            if category != "全部" and category not in name:
+            if cat != "全部" and CAR_CATEGORY.get(name, "") != cat:
                 continue
             if preferred_brand and preferred_brand not in name:
                 continue
             results.append({"name": name, "price": price_str,
                             "spec": CAR_SPEC_BRIEF.get(name, "暂无参数")})
-        results.sort(key=lambda x: float(x["price"].split("-")[0]))
+        # 起步价从高到低排序：贴近预算上限的车型优先（25万预算先看到24.99万的
+        # Model Y，而不是13万的入门车），符合导购"贴着预算推荐"的习惯
+        results.sort(key=lambda x: float(x["price"].split("-")[0]), reverse=True)
         return json.dumps({"count": len(results), "cars": results}, ensure_ascii=False)
 
     # ── 用车成本计算 ──
     @staticmethod
     def _tool_calculate_ownership_cost(model: str, years: int = 3) -> str:
-        price_str = CAR_PRICE_DB.get(model)
+        key = ToolExecutor._resolve_car_name(model)
+        price_str = CAR_PRICE_DB.get(key) if key else None
         if not price_str:
             return json.dumps({"error": f"未找到 {model} 的价格"}, ensure_ascii=False)
         parts = price_str.replace(" 万", "").split("-")
@@ -310,7 +400,7 @@ class ToolExecutor:
         annual = round(insurance + maintenance + energy, 2)
         total = round(mid_price + annual * years, 2)
         return json.dumps({
-            "model": model,
+            "model": key,
             "mid_price_wan": round(mid_price, 2),
             "annual_cost_wan": annual,
             "years": years,

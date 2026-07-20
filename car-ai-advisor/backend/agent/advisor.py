@@ -302,6 +302,17 @@ def _detect_previous_intent(final_line: str, full_text: str) -> str:
     """
     if not final_line:
         return ""
+    # 客套式收尾不算具体提议："如果您还有其他问题欢迎咨询""想了解其他信息
+    # 可以告诉我"这类话没有可执行的事项，若误判为"查参数提议"，用户回
+    # "需要"时模型会把参数原样复读一遍（答非所问）。
+    if re.search(
+        r'(如果|若|倘若)[^。！？!?\n]{0,20}(其他|其它)[^。！？!?\n]{0,4}(问题|信息|疑问)'
+        r'|随时(告诉|联系|提问|咨询|找)'
+        r'|欢迎(继续)?(咨询|提问|联系)'
+        r'|有问题[^。！？!?\n]{0,8}(告诉|联系|问|咨询)',
+        final_line,
+    ):
+        return ""
     # 结尾句里的车型优先；结尾没有再看全篇
     cars = _extract_car_names(final_line) or _extract_car_names(full_text)
     car_label = f"（{cars[0]}）" if cars else ""
@@ -314,7 +325,9 @@ def _detect_previous_intent(final_line: str, full_text: str) -> str:
         label = f"（{' 和 '.join(cars2[:2])}）" if cars2 else car_label
         return (f"上轮提议对比车型{label}——用户说'需要/好的'时，"
                 f"立即调用 compare_cars")
-    if re.search(r'详细|参数|配置|介绍|说说|讲讲|了解', final_line):
+    # "详细了解参数"类提议必须是真问句（要不要/吗/？），陈述句不算
+    if re.search(r'详细|参数|配置|介绍|说说|讲讲|了解', final_line) and \
+            re.search(r'要不要|想不想|需不需要|吗|？|\?|呢', final_line):
         return (f"上轮提议深入了解某车型{car_label}——用户说'需要/好的'时，"
                 f"立即查该车型详细参数")
     if re.search(r'推荐', final_line):
@@ -348,6 +361,24 @@ def _build_context_hint(history: list[dict]) -> str:
     if intent:
         hint_parts.append(intent)
 
+    # 编号推荐列表（供"第一款/第二款"指代解析）
+    #    (?!\d) 防止把 "18.98万" 这类小数当成列表编号切错
+    numbered = re.split(r'\n?\d+\.\s*(?!\d)', last_assistant)
+    has_numbered_list = len(numbered) >= 2
+
+    # 上一轮既没有可识别的提议、也没有推荐列表 → 用户的短确认词
+    # （"需要/好的"）没有明确指向。注入"澄清"提示，防止模型把上一轮
+    # 内容原样复读一遍（答非所问的一种形态）。
+    if not intent and not has_numbered_list:
+        all_cars0 = _extract_car_names(last_assistant)
+        cars_txt = f"，讨论过：{'、'.join(all_cars0[:3])}" if all_cars0 else ""
+        return (
+            f"【对话上下文：上一轮只是陈述信息{cars_txt}，并没有提出待用户确认的具体事项】\n"
+            "用户的这条简短回复没有明确指向。请用一句话询问用户具体需要什么，"
+            "并结合上轮讨论给出 2-3 个可选方向（如：算落地价/养车成本、对比车型、查详细参数），"
+            "不要重复上一轮已经说过的内容。\n"
+        )
+
     # 2) 结尾句提到的车型（主角）
     end_cars = _extract_car_names(final_line) if final_line else []
     if end_cars:
@@ -359,10 +390,8 @@ def _build_context_hint(history: list[dict]) -> str:
     if other_cars:
         hint_parts.append(f"本轮还讨论过：{'、'.join(other_cars[:4])}")
 
-    # 4) 编号推荐列表（供"第一款/第二款"指代解析）
-    #    (?!\d) 防止把 "18.98万" 这类小数当成列表编号切错
-    numbered = re.split(r'\n?\d+\.\s*(?!\d)', last_assistant)
-    if len(numbered) >= 2:
+    # 4) 编号推荐列表（复用上方已切分的结果）
+    if has_numbered_list:
         items = [n.strip()[:30] for n in numbered[1:6] if n.strip()]
         if items:
             hint_parts.append(f"推荐列表：{' | '.join(items)}")
@@ -490,6 +519,12 @@ class CarAdvisorAgent:
                 query, context_hint.strip()[:120],
             )
 
+        # 澄清型提示（"上一轮没有具体提议"）→ 本轮应先问清用户意图，
+        # 不强制调工具；其余情况首轮强制 tool_choice=required，
+        # 杜绝模型跳过检索、凭记忆编造车型参数（实测发生过：未调工具
+        # 直接回答"宋L是三元锂71kWh"——知识库里是刀片电池87kWh）。
+        is_clarify_hint = context_hint.startswith("【对话上下文：上一轮只是陈述信息")
+
         # ── 组装消息 ──
         messages: list[dict] = [
             {"role": "system", "content": CAR_ADVISOR_SYSTEM_PROMPT},
@@ -518,7 +553,11 @@ class CarAdvisorAgent:
                     model=self.model,
                     messages=messages,
                     tools=TOOL_SCHEMAS,
-                    tool_choice="auto",
+                    tool_choice=(
+                        "required"
+                        if (iteration == 0 and not is_clarify_hint)
+                        else "auto"
+                    ),
                     temperature=0.7,
                 )
                 msg = response.choices[0].message

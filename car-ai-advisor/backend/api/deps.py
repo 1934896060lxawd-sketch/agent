@@ -8,6 +8,7 @@
 
 import logging
 import pickle
+import threading
 from pathlib import Path
 
 from fastapi import Depends, HTTPException, Request
@@ -22,8 +23,9 @@ from backend.agent.advisor import CarAdvisorAgent
 
 logger = logging.getLogger(__name__)
 
-# Agent 单例
+# Agent 单例 + 构建锁（预热任务与首个请求可能并发，锁保证只加载一次）
 _agent: "CarAdvisorAgent | None" = None
+_agent_lock = threading.Lock()
 
 
 async def get_redis_client(request: Request) -> Redis:
@@ -59,37 +61,45 @@ async def check_rate_limit(
     return user_id
 
 
-async def get_agent() -> CarAdvisorAgent:
-    """获取 Agent 单例。首次调用时加载知识库索引。
+def build_agent_singleton() -> CarAdvisorAgent:
+    """构建（或返回）Agent 单例。线程安全，供 FastAPI 依赖与启动预热共用。
 
     需要先运行 build_index.py 构建索引文件：
       python knowledge_base/scripts/build_index.py
     """
     global _agent
-    if _agent is not None:
+    with _agent_lock:
+        if _agent is not None:
+            return _agent
+
+        import faiss
+        from backend.rag.retriever import VectorIndex, BM25
+
+        project_root = Path(__file__).resolve().parent.parent.parent
+        processed_dir = project_root / settings.knowledge_base_dir / "processed"
+        index_path = str(processed_dir / "faiss_index.bin")
+        docs_path = str(processed_dir / "documents.pkl")
+
+        if not Path(index_path).exists() or not Path(docs_path).exists():
+            raise HTTPException(
+                status_code=503,
+                detail="知识库索引未构建，请先运行: python knowledge_base/scripts/build_index.py",
+            )
+
+        logger.info("加载知识库索引...")
+        vector_index = VectorIndex.load(index_path, docs_path)
+        bm25 = BM25(vector_index.documents)
+
+        executor = ToolExecutor()
+        executor.set_retrievers(vector_index, bm25)
+
+        _agent = CarAdvisorAgent(executor)
+        logger.info("Agent 就绪")
         return _agent
 
-    import faiss
-    from backend.rag.retriever import VectorIndex, BM25
 
-    project_root = Path(__file__).resolve().parent.parent.parent
-    processed_dir = project_root / settings.knowledge_base_dir / "processed"
-    index_path = str(processed_dir / "faiss_index.bin")
-    docs_path = str(processed_dir / "documents.pkl")
-
-    if not Path(index_path).exists() or not Path(docs_path).exists():
-        raise HTTPException(
-            status_code=503,
-            detail="知识库索引未构建，请先运行: python knowledge_base/scripts/build_index.py",
-        )
-
-    logger.info("加载知识库索引...")
-    vector_index = VectorIndex.load(index_path, docs_path)
-    bm25 = BM25(vector_index.documents)
-
-    executor = ToolExecutor()
-    executor.set_retrievers(vector_index, bm25)
-
-    _agent = CarAdvisorAgent(executor)
-    logger.info("Agent 就绪")
-    return _agent
+async def get_agent() -> CarAdvisorAgent:
+    """FastAPI 依赖：获取 Agent 单例（首次调用时构建）。"""
+    if _agent is not None:
+        return _agent
+    return build_agent_singleton()

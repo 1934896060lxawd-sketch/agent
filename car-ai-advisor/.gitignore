@@ -10,6 +10,7 @@ venv/
 # Environment
 .env
 *.env.local
+.streamlit/secrets.toml
 
 # IDE
 .vscode/

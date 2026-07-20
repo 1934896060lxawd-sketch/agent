@@ -2,17 +2,24 @@
 
 管线位置: 粗排（Top-K×2）→ 精排（Reranker）→ Top-K 喂 LLM。
 未安装模型时自动降级为跳过精排，不影响核心功能。
+
+注意：sentence_transformers（含 torch）导入需 20-40 秒，刻意放在函数内
+延迟导入，让 uvicorn 启动与 /health 保持秒级响应（模型由启动预热任务加载）。
 """
+
+from __future__ import annotations
 
 import concurrent.futures
 import logging
 import os
 from pathlib import Path
-
-from sentence_transformers import CrossEncoder
+from typing import TYPE_CHECKING
 
 from backend.config import settings
 from backend.rag.chunker import Document
+
+if TYPE_CHECKING:
+    from sentence_transformers import CrossEncoder
 
 logger = logging.getLogger(__name__)
 
@@ -29,12 +36,20 @@ def get_reranker() -> "CrossEncoder | None":
     _load_attempted = True
     model_name = settings.reranker_model
 
+    from sentence_transformers import CrossEncoder  # 延迟导入（重）
+
     project_root = Path(__file__).resolve().parent.parent.parent
     local_path = project_root / "models" / "bge-reranker-base"
     if local_path.is_dir():
-        logger.info(f"从本地加载精排模型: {local_path}")
-        _reranker_model = CrossEncoder(str(local_path))
-        return _reranker_model
+        try:
+            logger.info(f"从本地加载精排模型: {local_path}")
+            _reranker_model = CrossEncoder(str(local_path))
+            return _reranker_model
+        except Exception as e:
+            # 本地模型损坏/缺文件时降级到 HF 分支，绝不能让异常击穿检索工具
+            # （历史教训：此处未捕获时 search_car_knowledge 整体报错，
+            # 模型拿不到数据就会凭记忆编造参数）
+            logger.warning(f"本地精排模型加载失败: {e}，尝试 HuggingFace 降级")
 
     try:
         os.environ.setdefault("HF_ENDPOINT", "https://hf-mirror.com")

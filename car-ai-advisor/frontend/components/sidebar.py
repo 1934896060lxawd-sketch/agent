@@ -27,15 +27,14 @@ def render_sidebar(client) -> None:
     with st.sidebar:
         # ── 品牌区 ──
         st.markdown("""
-        <div style="text-align:center; padding:0.5rem 0 1rem 0;">
-            <div style="font-size:2.2rem;">🚗</div>
-            <div style="font-weight:700; font-size:1.1rem; color:#1e293b;">AI 导购助手</div>
-            <div style="font-size:0.75rem; color:#94a3b8;">Powered by DeepSeek</div>
+        <div style="padding:0.2rem 0 0.8rem 0;">
+            <div style="font-weight:600; font-size:1rem; color:#171717;">🚗 汽车导购助手</div>
+            <div style="font-size:0.72rem; color:#9ca3af; margin-top:0.15rem;">AI Car Advisor</div>
         </div>
         """, unsafe_allow_html=True)
 
         # ── 新建会话 ──
-        st.markdown("##### ➕ 新建会话")
+        st.caption("新建会话")
         new_title = st.text_input(
             "名称", value="", placeholder="输入名称，如「SUV选购」",
             key="input_new_title", label_visibility="collapsed",
@@ -55,7 +54,7 @@ def render_sidebar(client) -> None:
         st.divider()
 
         # ── 会话列表 ──
-        st.markdown("##### 💬 我的会话")
+        st.caption("我的会话")
         try:
             sessions = run_async(client.list_sessions())
         except Exception:

@@ -2,29 +2,38 @@
 
 本地优先（models/bge-base-zh-v1.5/），不存在时从 HuggingFace 镜像拉取。
 normalize_embeddings=True → 内积 = 余弦相似度。
+
+注意：sentence_transformers（含 torch）导入需 20-40 秒，刻意放在函数内
+延迟导入，让 uvicorn 启动与 /health 保持秒级响应（模型由启动预热任务加载）。
 """
+
+from __future__ import annotations
 
 import logging
 import os
 from pathlib import Path
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
 
 from backend.config import settings
 from backend.rag.chunker import Document
 
+if TYPE_CHECKING:
+    from sentence_transformers import SentenceTransformer
+
 logger = logging.getLogger(__name__)
 
-_embed_model: Optional[SentenceTransformer] = None
+_embed_model: Optional["SentenceTransformer"] = None
 
 
-def get_embedding_model() -> SentenceTransformer:
+def get_embedding_model() -> "SentenceTransformer":
     """获取嵌入模型单例。本地优先 → HuggingFace 镜像降级。"""
     global _embed_model
     if _embed_model is not None:
         return _embed_model
+
+    from sentence_transformers import SentenceTransformer  # 延迟导入（重）
 
     model_name = settings.embedding_model  # "BAAI/bge-base-zh-v1.5"
 

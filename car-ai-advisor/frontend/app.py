@@ -17,115 +17,168 @@ from frontend.components.sidebar import render_sidebar, _current_msgs, _set_curr
 logger = logging.getLogger(__name__)
 
 st.set_page_config(
-    page_title="智能汽车导购助手",
+    page_title="汽车导购助手",
     page_icon="🚗",
-    layout="wide",
+    layout="centered",
     initial_sidebar_state="expanded",
 )
 
-# ── 全局 CSS ──
+# ── 全局 CSS（DeepSeek 式极简风）──
 st.markdown("""
 <style>
-/* 主色调：深蓝科技感 + 暖橙点缀 */
+/* 调色板：白底 + DeepSeek 蓝点缀，无渐变无阴影 */
 :root {
-    --primary: #1a73e8;
-    --accent: #ff6d00;
-    --bg: #f8fafc;
-    --card: #ffffff;
-    --text: #1e293b;
-    --muted: #64748b;
-    --border: #e2e8f0;
+    --primary: #4d6bfe;
+    --bg: #ffffff;
+    --sidebar-bg: #f9fafb;
+    --text: #171717;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --user-bubble: #edf1fd;
 }
 
-/* 页面背景 */
+/* 页面背景与内容列 */
 .stApp { background-color: var(--bg); }
-
-/* 标题区域 */
-.main-header {
-    background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
-    padding: 1.5rem 2rem;
-    border-radius: 12px;
-    margin-bottom: 1rem;
-    color: white;
+.block-container {
+    max-width: 800px;
+    padding-top: 1.5rem;
 }
-.main-header h1 { color: white !important; margin: 0; font-size: 1.8rem; }
-.main-header p { color: rgba(255,255,255,0.85); margin: 0.3rem 0 0 0; font-size: 0.95rem; }
 
-/* 侧边栏美化 */
+/* 隐藏 Streamlit 默认装饰（菜单/工具栏/页脚），保持界面干净 */
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+[data-testid="stToolbar"] { display: none; }
+[data-testid="stHeader"] { background: transparent; }
+[data-testid="stDecoration"] { display: none; }
+
+/* 顶部极简标题条 */
+.top-bar {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.2rem 0 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.2rem;
+}
+.top-bar .top-title { font-size: 1.05rem; font-weight: 600; color: var(--text); }
+.top-bar .top-sub { font-size: 0.8rem; color: var(--muted); }
+
+/* 侧边栏：浅灰底、扁平按钮 */
 section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #f1f5f9 0%, #e8edf3 100%);
+    background: var(--sidebar-bg);
     border-right: 1px solid var(--border);
 }
 section[data-testid="stSidebar"] .stButton > button {
     border-radius: 8px;
-    transition: all 0.2s;
-    font-size: 0.9rem;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    font-size: 0.88rem;
+    text-align: left;
+    transition: background 0.15s;
 }
 section[data-testid="stSidebar"] .stButton > button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: #eef0f3;
+    box-shadow: none;
+    transform: none;
+}
+section[data-testid="stSidebar"] .stButton > button[kind="primary"] {
+    background: var(--primary);
+    color: #fff;
+    text-align: center;
+}
+section[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
+    background: #3d5aee;
 }
 
-/* 聊天输入 */
-.stChatInput > div {
-    border: 2px solid var(--border) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+/* 聊天消息：扁平、无卡片阴影 */
+[data-testid="stChatMessage"] {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0.35rem 0;
+    margin: 0.15rem 0;
 }
-.stChatInput > div:focus-within {
+
+/* 用户消息：右侧浅蓝气泡（DeepSeek 同款），隐藏头像 */
+[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
+    flex-direction: row-reverse;
+}
+[data-testid="stChatMessageAvatarUser"] { display: none; }
+[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"])
+    [data-testid="stChatMessageContent"] {
+    background: var(--user-bubble);
+    border-radius: 14px 14px 4px 14px;
+    padding: 0.6rem 1rem;
+    max-width: 85%;
+}
+
+/* AI 消息：纯文本流，左侧小头像，无气泡 */
+[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"])
+    [data-testid="stChatMessageContent"] {
+    background: transparent;
+    padding: 0.2rem 0 0.2rem 0.2rem;
+    width: 100%;
+}
+
+/* 聊天输入框：大圆角胶囊、细边框 */
+[data-testid="stChatInput"] > div {
+    border: 1px solid var(--border) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+    background: #fff;
+}
+[data-testid="stChatInput"] > div:focus-within {
     border-color: var(--primary) !important;
-    box-shadow: 0 2px 16px rgba(26,115,232,0.12);
+    box-shadow: 0 1px 8px rgba(77,107,254,0.15) !important;
 }
 
-/* 聊天消息气泡 */
-.stChatMessage {
-    border-radius: 12px;
-    padding: 0.8rem 1rem;
-    margin: 0.5rem 0;
-}
-.stChatMessage[data-testid="stChatMessage"] {
-    background: var(--card);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
-
-/* 欢迎卡片 */
+/* 欢迎页：居中大留白，无卡片边框 */
 .welcome-card {
     text-align: center;
-    padding: 3rem 2rem;
-    background: var(--card);
-    border-radius: 16px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-    margin: 2rem auto;
-    max-width: 650px;
+    padding: 5rem 1rem 2rem 1rem;
 }
-.welcome-card h2 { color: var(--text); margin-bottom: 0.5rem; }
-.welcome-card p { color: var(--muted); font-size: 0.95rem; }
+.welcome-card .welcome-logo { font-size: 3rem; }
+.welcome-card h2 {
+    color: var(--text);
+    font-weight: 600;
+    margin: 1rem 0 0.4rem 0;
+    font-size: 1.5rem;
+}
+.welcome-card p { color: var(--muted); font-size: 0.92rem; margin: 0.2rem 0; }
 .welcome-card .quick-actions {
     display: flex; gap: 0.5rem; justify-content: center;
-    flex-wrap: wrap; margin-top: 1.5rem;
+    flex-wrap: wrap; margin-top: 1.6rem;
 }
 .quick-chip {
-    background: var(--bg); border: 1px solid var(--border);
-    padding: 0.4rem 1rem; border-radius: 20px;
-    font-size: 0.85rem; color: var(--muted);
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    color: var(--muted);
 }
 
-/* 状态提示 */
-.stAlert {
+/* 参考来源折叠条：极简细边框 */
+[data-testid="stExpander"] {
+    border: 1px solid var(--border);
     border-radius: 10px;
-    border: none;
+    box-shadow: none;
 }
+
+/* 状态提示条 */
+.stAlert { border-radius: 10px; border: none; }
 
 /* 分割线 */
 hr { border-color: var(--border); margin: 0.8rem 0; }
 </style>
 """, unsafe_allow_html=True)
 
-# ── 标题 ──
+# ── 极简标题条 ──
 st.markdown("""
-<div class="main-header">
-    <h1>🚗 智能汽车导购助手</h1>
-    <p>基于 DeepSeek 大模型 + RAG 知识库，为您提供专业的新能源汽车选购建议</p>
+<div class="top-bar">
+    <span class="top-title">🚗 汽车导购助手</span>
+    <span class="top-sub">新能源车型推荐 · 对比 · 成本计算</span>
 </div>
 """, unsafe_allow_html=True)
 
@@ -147,8 +200,38 @@ def init_session_state() -> None:
         st.session_state.session_named = False
 
 
+def check_access() -> None:
+    """公开访问门禁 — 访问密码 + 单会话提问软上限。
+
+    在 .streamlit/secrets.toml 配置：
+      ACCESS_PASSWORD = "xxx"            # 未配置则放行（本地开发模式）
+      MAX_QUESTIONS_PER_SESSION = 50     # 0 表示不限
+    防止公开分享后陌生人刷爆 DeepSeek API 额度。
+    """
+    required = st.secrets.get("ACCESS_PASSWORD", "")
+    if required and not st.session_state.get("access_granted"):
+        st.markdown("## 🔒 演示站访问验证")
+        pwd = st.text_input("请输入访问密码（向分享者索取）", type="password")
+        if not pwd:
+            st.stop()
+        if pwd != required:
+            st.error("密码不正确，请重试")
+            st.stop()
+        st.session_state.access_granted = True
+
+    max_q = int(st.secrets.get("MAX_QUESTIONS_PER_SESSION", 0) or 0)
+    if max_q > 0:
+        asked = int(st.session_state.get("question_count", 0))
+        remaining = max_q - asked
+        if remaining <= 0:
+            st.warning(f"😊 本次体验已用完 {max_q} 次提问额度，感谢试用！如需继续请联系分享者。")
+            st.stop()
+        st.caption(f"💬 本次体验剩余提问次数：{remaining}")
+
+
 def main() -> None:
     init_session_state()
+    check_access()
     client = get_api_client()
 
     render_sidebar(client)
@@ -159,8 +242,9 @@ def main() -> None:
     if not msgs:
         st.markdown("""
         <div class="welcome-card">
-            <h2>👋 欢迎使用智能汽车导购</h2>
-            <p>我了解 16 款主流新能源车型的详细参数、价格、车主评价</p>
+            <div class="welcome-logo">🚗</div>
+            <h2>想看什么车？</h2>
+            <p>我了解 16 款主流新能源车型的参数、价格与车主评价</p>
             <p>可以帮您推荐车型、对比配置、计算用车成本</p>
             <div class="quick-actions">
                 <span class="quick-chip">💰 预算推荐</span>
@@ -181,6 +265,7 @@ def main() -> None:
 
     # ── 输入框 ──
     if prompt := st.chat_input('请输入您的问题，比如"25万预算推荐什么SUV？"'):
+        st.session_state.question_count = int(st.session_state.get("question_count", 0)) + 1
 
         if not st.session_state.session_named:
             st.session_state.session_named = True

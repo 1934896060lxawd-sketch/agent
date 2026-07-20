@@ -132,11 +132,14 @@ async def chat(
     # ═══════════════════════════════════════
     start = time.time()
     full_answer = ""
+    error_msg = ""
     retrieved_sources: list[SourceDoc] = []
 
     async for event in _agent_generator(body.query, history, agent):
         if event.get("type") == "token":
             full_answer += event.get("content", "")
+        elif event.get("type") == "error":
+            error_msg = event.get("message", "服务暂时不可用，请稍后重试")
         elif event.get("type") == "source":
             for i, doc in enumerate(event.get("documents", []), 1):
                 source_name = doc.get("source", "未知")
@@ -151,6 +154,9 @@ async def chat(
                 ))
 
     latency_ms = (time.time() - start) * 1000
+    # Agent 出错时返回友好文案，而不是 HTTP 200 + 空回答
+    if not full_answer and error_msg:
+        full_answer = error_msg
     full_answer = _strip_xml(full_answer)
     if full_answer:
         await session_mgr.add_message(body.session_id, "assistant", full_answer)

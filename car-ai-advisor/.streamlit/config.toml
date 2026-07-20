@@ -6,4 +6,7 @@ port = 8501
 gatherUsageStats = false
 
 [theme]
-primaryColor = "#1a73e8"
+primaryColor = "#4d6bfe"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f3f4f6"
+textColor = "#171717"

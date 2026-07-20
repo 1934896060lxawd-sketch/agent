@@ -1,5 +1,8 @@
+import asyncio
 import logging
+import os
 import sys
+import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -25,24 +28,37 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """应用生命周期：启动时连接 Redis，关闭时释放连接。"""
+    """应用生命周期：启动时连接 Redis，关闭时释放连接。
+
+    环境变量 USE_FAKEREDIS=1 → 跳过 Redis 连接，直接使用内存模式。
+    本机开发/演示场景必备：部分 Windows 环境下 localhost 拒绝连接会被
+    网络过滤驱动延迟数秒，叠加 redis 客户端重试导致启动卡 40 秒以上。
+    """
     logger.info("Application startup...")
-    try:
-        app.state.redis = redis.Redis(
-            host=settings.redis_host,
-            port=settings.redis_port,
-            db=settings.redis_db,
-            password=settings.redis_password or None,
-            decode_responses=True,
-            socket_connect_timeout=2,
-        )
-        await app.state.redis.ping()
-        logger.info("Redis 连接成功")
-    except Exception as e:
-        logger.warning(f"Redis 连接失败 ({e})，降级为 fakeredis 内存模式")
+    if os.getenv("USE_FAKEREDIS") == "1":
         import fakeredis.aioredis
         app.state.redis = fakeredis.aioredis.FakeRedis(decode_responses=True)
-        logger.info("fakeredis 就绪（数据不持久化）")
+        logger.info("USE_FAKEREDIS=1 → fakeredis 内存模式（数据不持久化）")
+    else:
+        try:
+            app.state.redis = redis.Redis(
+                host=settings.redis_host,
+                port=settings.redis_port,
+                db=settings.redis_db,
+                password=settings.redis_password or None,
+                decode_responses=True,
+                socket_connect_timeout=2,
+            )
+            await app.state.redis.ping()
+            logger.info("Redis 连接成功")
+        except Exception as e:
+            logger.warning(f"Redis 连接失败 ({e})，降级为 fakeredis 内存模式")
+            import fakeredis.aioredis
+            app.state.redis = fakeredis.aioredis.FakeRedis(decode_responses=True)
+            logger.info("fakeredis 就绪（数据不持久化）")
+
+    # 后台预热模型，不阻塞 /health（秒级就绪）；访客首问不再等 10-30 秒
+    asyncio.create_task(_warmup_models())
 
     yield
 
@@ -50,6 +66,30 @@ async def lifespan(app: FastAPI):
         await app.state.redis.close()
         logger.info("Redis 连接已关闭")
     logger.info("Application shutdown...")
+
+
+async def _warmup_models() -> None:
+    """后台预热：构建 Agent + 跑一次真实检索，带起嵌入/精排模型加载。
+
+    嵌入与精排模型（torch，20-40 秒）已改为函数内延迟导入，uvicorn 因此
+    秒级就绪；真正的模型加载挪到本任务，让外网访客的第一个问题无需等待。
+    预热失败不影响服务——首个真实请求会现场加载（等价于旧行为）。
+    """
+    loop = asyncio.get_running_loop()
+
+    def _work() -> None:
+        try:
+            from backend.api.deps import build_agent_singleton
+
+            t0 = time.monotonic()
+            agent = build_agent_singleton()
+            # 一次真实检索：触发嵌入模型 + jieba + 精排模型全部就位
+            agent.executor._tool_search_car_knowledge("预热：比亚迪海豚参数")
+            logger.info("模型预热完成，耗时 %.1fs", time.monotonic() - t0)
+        except Exception as e:
+            logger.warning("模型预热失败（首个请求将现场加载）: %s", e)
+
+    await loop.run_in_executor(None, _work)
 
 
 app = FastAPI(

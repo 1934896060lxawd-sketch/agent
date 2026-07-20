@@ -9,8 +9,7 @@ DELETE /sessions/{id}        删除指定会话，同时清理会话消息、用
 GET    /sessions/{id}/history 查询该会话下所有历史聊天消息
 """
 
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, Depends, HTTPException, Response
 
 # Pydantic 请求/响应数据模型（入参校验、出参结构化）
 from backend.schemas.session import CreateSessionReq, RenameSessionReq, SessionListResp
@@ -102,8 +101,10 @@ async def delete_session(
     success = await session_mgr.delete_session(user_id, session_id)
     if not success:
         raise HTTPException(status_code=404, detail="会话不存在")
-    # 204 No Content：成功删除，无返回内容
-    return JSONResponse(status_code=204, content=None)
+    # 204 必须返回空响应体。旧代码 return JSONResponse(204, None) 会产出
+    # "null" 4 字节 body，与 204 无body语义冲突，uvicorn 抛
+    # "Response content longer than Content-Length" 并掐断长连接
+    return Response(status_code=204)
 
 
 @router.get("/{session_id}/history")
